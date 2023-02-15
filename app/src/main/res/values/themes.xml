@@ -1,0 +1,74 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <!-- Base application theme. -->
+    <style name="Theme.BefitApp" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+        <!-- Primary brand color. -->
+        <item name="colorPrimary">@color/primary_color</item>
+        <item name="colorPrimaryVariant">@color/primary_color</item>
+        <item name="colorOnPrimary">@color/white</item>
+        <!-- Secondary brand color. -->
+        <item name="colorSecondary">@color/teal_200</item>
+        <item name="colorSecondaryVariant">@color/teal_700</item>
+        <item name="colorOnSecondary">@color/black</item>
+        <!-- Status bar color. -->
+        <item name="android:statusBarColor">?attr/colorPrimaryVariant</item>
+        <!-- Customize your theme here. -->
+    </style>
+
+    <style name="BackGroundImageView">
+        <item name="android:alpha">0.5</item>
+        <item name="android:scaleType">fitXY</item>
+        <item name="android:src">@drawable/img_background</item>
+        <item name="backgroundColor">@color/primary_color</item>
+    </style>
+
+
+
+    <style name="registerButton">
+        <item name="background">@drawable/bg_button</item>
+        <item name="backgroundColor">@color/white</item>
+        <item name="android:textColor">@color/primary_color</item>
+        <item name="android:textSize">18sp</item>
+        <item name="textAllCaps" />
+        <item name="textOutlineThickness">5dp</item>
+        <item name="colorOutline">@color/primary_color</item>
+
+    </style>
+
+    <style name="loginButton">
+        <item name="backgroundColor">@color/primary_color</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="android:textSize">18sp</item>
+        <item name="textAllCaps" />
+    </style>
+
+    <style name="TextInputLayout" parent="ThemeOverlay.Material3.AutoCompleteTextView.FilledBox">
+        <item name="android:textColorHint">@color/dark_grey</item>
+        <item name="backgroundColor">@color/light_grey</item>
+        <item name="hintTextColor">@color/grey</item>
+        <item name="boxStrokeWidth">0dp</item>
+        <item name="boxStrokeWidthFocused">0dp</item>
+
+    </style>
+
+
+    <style name="TextInputEditText" parent="ThemeOverlay.Material3.AutoCompleteTextView.FilledBox">
+        <item name="background">@drawable/bg_text_field</item>
+        <item name="fontFamily">@font/inter</item>
+    </style>
+
+    <style name="welcome_text">
+        <item name="android:color">@color/white</item>
+        <item name="textFillColor">@color/white</item>
+        <item name="android:textSize">32sp</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+    
+    <style name="login_title">
+        <item name="android:textColor">@color/black</item>
+    </style>
+
+    <style name="cadastro_title">
+        <item name="android:textColor">@color/black</item>
+    </style>
+
+</resources>

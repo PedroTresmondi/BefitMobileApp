@@ -1,0 +1,29 @@
+<resources>
+    <string name="app_name">Befit App</string>
+    <string name="started_title">Bem vindo</string>
+    <string name="started_subtitle">Informe seu email e senha.</string>
+    <string name="started_splash_subtitle">Entre se ja possuir uma conta.<br> </br> Cadastre-se se for sua primeira vez</string>
+    <string name="illustration_logo">Amado logo da Befit!</string>
+    <string name="btn_login">ENTRAR</string>
+    <string name="btn_register">CADASTRE-SE</string>
+    <string name="login_email">Email</string>
+    <string name="login_password">senha</string>
+    <string name="login_senha">senha</string>
+    <string name="started_subtitle_register">Insira seus dados para criar sua conta</string>
+    <string name="login_confirmar_senha">confirmar senha</string>
+    <string name="btn_confirmar">CONFIRMAR DADOS</string>
+    <string name="home_title">oiii</string>
+    <string name="btn_logout">LOGOUT</string>
+    <string name="login_title">Login no app</string>
+
+    <string name="cadastro_sub_title"> <font color="grey">Ainda não tenho uma conta</font> <font color="#3918D9"><b>Registre-se </b></font>
+    </string>
+
+    <string name="login_sub_title"> <font color="grey">Já tenho uma conta</font> <font color="#3918D9"><b>Login </b></font>
+    </string>
+    <string name="cadastro_title">Criar uma conta</string>
+    <string name="registro_subtitle">insira seus dados para criar uma conta</string>
+    <string name="register_user">Usuário</string>
+    <string name="register_confirm_senha">Confirmar senha</string>
+
+</resources>
