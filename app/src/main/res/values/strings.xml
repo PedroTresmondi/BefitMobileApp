@@ -25,5 +25,6 @@
     <string name="registro_subtitle">insira seus dados para criar uma conta</string>
     <string name="register_user">Usuário</string>
     <string name="register_confirm_senha">Confirmar senha</string>
+    <string name="rating">Avaliação:  %1$.1f</string>
 
 </resources>
