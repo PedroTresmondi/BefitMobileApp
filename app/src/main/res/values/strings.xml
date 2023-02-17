@@ -26,5 +26,6 @@
     <string name="register_user">Usuário</string>
     <string name="register_confirm_senha">Confirmar senha</string>
     <string name="rating">Avaliação:  %1$.1f</string>
+    <string name="google_maps_key">AIzaSyC9OBoZmZKvEq_A2usOPCi68Shx3AFKUDc</string>
 
 </resources>

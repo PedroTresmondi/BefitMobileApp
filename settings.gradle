@@ -1,8 +1,8 @@
 pluginManagement {
     repositories {
         google()
-        mavenCentral()
         gradlePluginPortal()
+        mavenCentral()
     }
 }
 
@@ -16,3 +16,5 @@ dependencyResolutionManagement {
 }
 rootProject.name = "Befit App"
 include ':app'
+
+

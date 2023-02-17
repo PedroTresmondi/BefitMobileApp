@@ -19,6 +19,17 @@
             android:exported="false"
 
             />
+
+        <activity
+            android:name=".MapsActivity"
+            android:label="@string/app_name"/>
+
+
+
+
+
+
+
         <activity
             android:name=".LoginActivity"
             android:exported="false"
@@ -39,5 +50,8 @@
             android:value="${GOOGLE_MAPS_API_KEY}"/>
 
     </application>
+
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.INTERNET" />
 
 </manifest>
