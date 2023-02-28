@@ -7,8 +7,8 @@ plugins {
 
 }
 allprojects {
-    repositories {
-        google()
-        jcenter()
-    }
+ //   repositories {
+    //      google()
+    //     jcenter()
+    // }
 }

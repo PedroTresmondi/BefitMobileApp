@@ -1,17 +1,14 @@
 package com.example.befitapp
 
 import android.Manifest
-import android.app.DownloadManager
-import android.content.ContentValues.TAG
 import android.content.pm.PackageManager
 import android.location.Location
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import android.widget.Toast
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
-import com.android.volley.toolbox.JsonObjectRequest
+import com.github.kittinunf.fuel.Fuel
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
 import com.google.android.gms.maps.CameraUpdateFactory
@@ -22,53 +19,11 @@ import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
 import com.google.android.gms.tasks.OnCompleteListener
 import com.google.android.gms.tasks.Task
-import com.google.android.libraries.places.api.Places
+import kotlinx.serialization.json.Json
+import kotlinx.serialization.json.jsonArray
+import kotlinx.serialization.json.jsonObject
 
 class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
-
-    private fun searchNearbyGyms(latLng: LatLng) {
-        val apiKey = getString(R.string.google_maps_key)
-        val placesClient = Places.createClient(this)
-        val radius = 5000 // Raio de busca em metros
-        val type = "gym" // Tipo de lugar a ser procurado
-        val location = "${latLng.latitude},${latLng.longitude}"
-        val url = "https://maps.googleapis.com/maps/api/place/nearbysearch/json?" +
-                "location=$location&radius=$radius&type=$type&key=$apiKey"
-
-        val request = JsonObjectRequest(
-            DownloadManager.Request.Method.GET, url, null,
-            { response ->
-                val results = response.getJSONArray("results")
-                for (i in 0 until results.length()) {
-                    val result = results.getJSONObject(i)
-                    val name = result.getString("name")
-                    val placeId = result.getString("place_id")
-                    val location = result.getJSONObject("geometry").getJSONObject("location")
-                    val lat = location.getDouble("lat")
-                    val lng = location.getDouble("lng")
-                    val latLng = LatLng(lat, lng)
-                    mMap.addMarker(MarkerOptions().position(latLng).title(name))
-                }
-            },
-            { error ->
-                Log.e(TAG, "Error searching nearby gyms", error)
-                Toast.makeText(this, "Error searching nearby gyms", Toast.LENGTH_SHORT).show()
-            })
-
-        placesClient.fetchPlace(request)
-    }
-
-
-    private fun updateMapLocation(location: Location) {
-        val latLng = LatLng(location.latitude, location.longitude)
-        mMap.clear()
-        mMap.addMarker(MarkerOptions().position(latLng).title("Minha localização"))
-        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, 15f))
-        searchNearbyGyms(latLng)
-    }
-
-
-
 
     private lateinit var mMap: GoogleMap
     private lateinit var fusedLocationClient: FusedLocationProviderClient
@@ -88,38 +43,79 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
     override fun onMapReady(googleMap: GoogleMap) {
         mMap = googleMap
 
-        if (ContextCompat.checkSelfPermission(this,
-                Manifest.permission.ACCESS_FINE_LOCATION)
-            == PackageManager.PERMISSION_GRANTED) {
+        if (ContextCompat.checkSelfPermission(
+                this,
+                Manifest.permission.ACCESS_FINE_LOCATION
+            )
+            == PackageManager.PERMISSION_GRANTED
+        ) {
             mMap.isMyLocationEnabled = true
 
-            fusedLocationClient.lastLocation.addOnCompleteListener(this, object : OnCompleteListener<Location> {
-                override fun onComplete(task: Task<Location>) {
-                    if (task.isSuccessful && task.result != null) {
-                        val currentLocation: Location = task.result
+            fusedLocationClient.lastLocation.addOnCompleteListener(
+                this,
+                object : OnCompleteListener<Location> {
+                    override fun onComplete(task: Task<Location>) {
+                        if (task.isSuccessful && task.result != null) {
+                            val currentLocation: Location = task.result
 
-                        val currentLatLng = LatLng(currentLocation.latitude, currentLocation.longitude)
-                        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(currentLatLng, 15f))
+                            val currentLatLng =
+                                LatLng(currentLocation.latitude, currentLocation.longitude)
+                            mMap.moveCamera(
+                                CameraUpdateFactory.newLatLngZoom(
+                                    currentLatLng,
+                                    15f
+                                )
+                            )
 
-                        val gymList = mapOf(
-                            "Academia 1" to LatLng(-23.564198, -46.651851),
-                            "Academia 2" to LatLng(-23.563345, -46.649067),
-                            "Academia 3" to LatLng(-23.563803, -46.650970),
-                            "Academia 4" to LatLng(-23.564405, -46.652503)
-                        )
+                            val url =
+                                "https://maps.googleapis.com/maps/api/place/nearbysearch/json?" +
+                                        "location=${currentLocation.latitude},${currentLocation.longitude}&" +
+                                        "radius=2000&types=gym&" +
+                                        "key=AIzaSyAghQgS67kmlLDvmOBAlyf7UDEjEmH_0R8"
 
-                        for ((name, position) in gymList) {
-                            mMap.addMarker(MarkerOptions().position(position).title(name))
+
+                            Fuel.get(url).response { request, response, result ->
+                                val jsonString = result.get().toString(Charsets.UTF_8)
+                                val jsonArray = Json.parseToJsonElement(jsonString)
+                                val gyms = jsonArray.jsonObject.get("results")?.jsonArray!!.map {
+                                    Gym(
+                                        name = it.jsonObject.get("name").toString(),
+                                        location = LatLng(
+                                            it.jsonObject.get("geometry")!!.jsonObject.get("location")!!.jsonObject.get(
+                                                "lat"
+                                            ).toString().toDouble(),
+                                            it.jsonObject.get("geometry")!!.jsonObject.get("location")!!.jsonObject.get(
+                                                "lng"
+                                            ).toString().toDouble()
+                                        ),
+                                        address = it.jsonObject.get("vicinity").toString()
+                                    )
+
+                                }
+
+                                gyms.forEach {
+                                    mMap.addMarker(
+                                        MarkerOptions().position(it.location)
+                                            .title(it.name.replace("\"", ""))
+                                            .snippet(it.address.replace("\"", ""))
+                                    )
+                                }
+                            }
+                        } else {
+                            Toast.makeText(
+                                this@MapsActivity,
+                                "Erro ao obter localização atual",
+                                Toast.LENGTH_SHORT
+                            ).show()
                         }
-                    } else {
-                        Toast.makeText(this@MapsActivity, "Erro ao obter localização atual", Toast.LENGTH_SHORT).show()
                     }
-                }
-            })
+                })
         } else {
-            ActivityCompat.requestPermissions(this,
+            ActivityCompat.requestPermissions(
+                this,
                 arrayOf(Manifest.permission.ACCESS_FINE_LOCATION),
-                REQUEST_LOCATION_PERMISSION)
+                REQUEST_LOCATION_PERMISSION
+            )
         }
     }
 
