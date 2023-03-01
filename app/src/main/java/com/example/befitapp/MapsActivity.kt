@@ -31,7 +31,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_map)
+        setContentView(R.layout.activity_main)
 
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
 
@@ -96,8 +96,11 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
                                 gyms.forEach {
                                     mMap.addMarker(
                                         MarkerOptions().position(it.location)
+//                                            ]
                                             .title(it.name.replace("\"", ""))
                                             .snippet(it.address.replace("\"", ""))
+
+
                                     )
                                 }
                             }

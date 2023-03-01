@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+            android:id="@+id/menu_profile"
+            android:icon="@drawable/baseline_person_24"
+            android:title="@string/menu_profile"/>
+    <item
+        android:id="@+id/menu_workouts"
+        android:icon="@drawable/baseline_fitness_center_black"
+        android:title="@string/menu_workouts"/>
+    <item
+        android:id="@+id/menu_diets"
+        android:icon="@drawable/baseline_self_improvement_24"
+        android:title="@string/menu_diets"/>
+
+</menu>
