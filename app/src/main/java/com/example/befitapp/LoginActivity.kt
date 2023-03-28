@@ -15,7 +15,7 @@ class LoginActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         binding.btnLogin.setOnClickListener{
-            startActivity(Intent(this, MapsActivity::class.java))
+            startActivity(Intent(this, HomeActivity::class.java))
         }
 
         binding.loginSubTitle.setOnClickListener{

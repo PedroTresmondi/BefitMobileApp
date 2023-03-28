@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/menu_training"
+        android:icon="@drawable/ic_treino"
+        android:title="Treino"
+        app:showAsAction="always" />
+
+    <item
+        android:id="@+id/menu_profile"
+        android:icon="@drawable/ic_perfil"
+        android:title="Perfil"
+        app:showAsAction="always" />
+
+    <item
+        android:id="@+id/menu_diet"
+        android:icon="@drawable/ic_dieta"
+        android:title="Dieta"
+        app:showAsAction="always" />
+</menu>
