@@ -5,35 +5,57 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".LoginActivity"
-    android:background="@color/white"
+    android:background="@drawable/app_gradient"
     >
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:layout_editor_absoluteX="148dp"
-        tools:layout_editor_absoluteY="170dp">
-
-        <ImageView
-            android:id="@+id/imageView5"
-            android:layout_width="409dp"
-            android:layout_height="307dp"
-
-            android:src="@drawable/login_background"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent">
 
         <ImageView
             android:id="@+id/imageView4"
-            android:layout_width="257dp"
-            android:layout_height="99dp"
-            android:layout_marginTop="64dp"
-            android:src="@drawable/logo"
+            android:layout_width="260dp"
+            android:layout_height="100dp"
+            android:layout_marginTop="65dp"
+            android:src="@drawable/logo_login"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/started_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/started_title"
+            android:textAlignment="center"
+            android:textColor="@color/white"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toTopOf="@+id/started_subtitle"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.053"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/login_title"
+            app:layout_constraintVertical_bias="0.871"
+            tools:ignore="MissingConstraints" />
+
+        <TextView
+            android:id="@+id/started_subtitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/started_subtitle"
+            android:textAlignment="center"
+            android:textColor="@color/white"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.066"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:ignore="MissingConstraints" />
 
         <TextView
             android:id="@+id/login_title"
@@ -42,79 +64,42 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="216dp"
             android:text="@string/login_title"
-            android:textSize="28dp"
+            android:textColor="@color/white"
+            android:textSize="28sp"
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.08"
+            app:layout_constraintHorizontal_bias="0.064"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
         <LinearLayout
+            android:orientation="horizontal"
             android:id="@+id/linearLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="20dp"
             android:layout_marginEnd="15dp"
             android:layout_marginBottom="20dp"
-            app:layout_constraintBottom_toBottomOf="@+id/imageView5"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="parent"
-            tools:ignore="MissingConstraints">
-
-
-            <TextView
-                android:id="@+id/started_title"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textColor="@color/dark_grey"
-                android:text="@string/started_title"
-                android:textAlignment="center"
-                android:textStyle="bold"
-                tools:ignore="MissingConstraints"
-                tools:layout_editor_absoluteX="20dp"
-                tools:layout_editor_absoluteY="338dp" />
-
-            <TextView
-                android:id="@+id/started_subtitle"
-                android:textColor="@color/dark_grey"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/started_subtitle"
-                android:textAlignment="center"
-                tools:ignore="MissingConstraints"
-                tools:layout_editor_absoluteX="16dp"
-                tools:layout_editor_absoluteY="356dp"
-                android:layout_marginStart="5dp"
-                />
-
-        </LinearLayout>
+            app:layout_constraintStart_toStartOf="parent"/>
 
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/btn_login"
             style="@style/loginButton"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="20dp"
-            android:layout_marginStart="15dp"
-            android:layout_marginEnd="15dp"
-            android:layout_marginBottom="56dp"
+            android:layout_width="370dp"
+            android:layout_height="45dp"
             android:background="@color/primary_color"
             android:text="@string/btn_login"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/imageView5"
-            app:layout_constraintVertical_bias="0.866" />
+            app:layout_constraintTop_toBottomOf="@+id/linearLayoutInput" />
 
         <TextView
             android:id="@+id/login_sub_title"
-
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:clickable="true"
-            android:onClick="RegisterBtn"
             android:text="@string/cadastro_sub_title"
             android:textAlignment="center"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -123,63 +108,30 @@
             app:layout_constraintTop_toBottomOf="@+id/btn_login" />
 
         <LinearLayout
+            android:id="@+id/linearLayoutInput"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            app:layout_constraintBottom_toTopOf="@+id/btn_login"
-            app:layout_constraintTop_toBottomOf="@+id/imageView5"
-            app:layout_constraintVertical_bias="0.101"
-            tools:layout_editor_absoluteX="1dp">
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/imageView4">
 
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/ipt_email"
-                style="@style/TextInputLayout"
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:layout_marginStart="15dp"
-                android:layout_marginEnd="15dp"
-                android:hint="@string/login_email"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                tools:ignore="MissingConstraints"
-                tools:layout_editor_absoluteY="373dp">
-
+                style="@style/round_input"
+                android:hint="@string/login_email">
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/et_email"
-                    style="@style/TextInputEditText"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="15dp"
-                    android:layout_marginEnd="15dp"
-
-                    />
-
+                    style="@style/TextInputEditText"/>
             </com.google.android.material.textfield.TextInputLayout>
-
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/ipt_password"
-                style="@style/TextInputLayout"
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:layout_marginStart="15dp"
-                android:layout_marginTop="15dp"
-                android:layout_marginEnd="15dp"
-                android:hint="@string/login_senha"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/ipt_email"
-                tools:layout_editor_absoluteY="373dp">
-
+                style="@style/round_input"
+                android:hint="@string/login_senha">
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/et_senha"
-                    style="@style/TextInputEditText"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="15dp"
-                    android:layout_marginEnd="15dp" />
-
+                    style="@style/TextInputEditText" />
             </com.google.android.material.textfield.TextInputLayout>
 
         </LinearLayout>

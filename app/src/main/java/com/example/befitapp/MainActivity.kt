@@ -1,10 +1,8 @@
 package com.example.befitapp
 
-import android.app.Activity
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import com.example.befitapp.databinding.ActivityHomeBinding
 import com.example.befitapp.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {

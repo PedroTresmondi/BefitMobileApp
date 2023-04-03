@@ -16,14 +16,20 @@
     <string name="btn_logout">LOGOUT</string>
     <string name="login_title">Login no app</string>
 
-    <string name="cadastro_sub_title"> <font color="grey">Ainda não tenho uma conta</font> <font color="#3918D9"><b>Registre-se </b></font>
+    <string name="cadastro_sub_title"> <font color="white">Ainda não tenho uma conta</font> <font color="#3918D9"><b>Registre-se </b></font>
     </string>
 
-    <string name="login_sub_title"> <font color="grey">Já tenho uma conta</font> <font color="#3918D9"><b>Login </b></font>
+    <string name="login_sub_title"> <font color="white">Já tenho uma conta</font> <font color="#3918D9"><b>Login </b></font>
     </string>
     <string name="cadastro_title">Criar uma conta</string>
     <string name="registro_subtitle">insira seus dados para criar uma conta</string>
     <string name="register_user">Usuário</string>
     <string name="register_confirm_senha">Confirmar senha</string>
+    <string name="rating">Avaliação:  %1$.1f</string>
+    <string name="google_maps_key">AIzaSyC9OBoZmZKvEq_A2usOPCi68Shx3AFKUDc</string>
+    <string name="hello_blank_fragment">blank fragment</string>
+    <string name="like_buttom">like_buttom</string>
+    <string name="nome_usuario">Pedro Tresmondi</string>
+    <string name="academias_proximas">Academias próximas:</string>
 
 </resources>
