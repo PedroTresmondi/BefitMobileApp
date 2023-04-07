@@ -128,9 +128,11 @@
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/ipt_password"
                 style="@style/round_input"
+                app:passwordToggleEnabled="true"
                 android:hint="@string/login_senha">
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/et_senha"
+                    android:inputType="textPassword"
                     style="@style/TextInputEditText" />
             </com.google.android.material.textfield.TextInputLayout>
 
