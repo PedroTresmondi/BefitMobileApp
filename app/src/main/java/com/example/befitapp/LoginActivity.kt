@@ -1,20 +1,19 @@
 package com.example.befitapp
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Button
-import android.widget.EditText
 import android.widget.Toast
-import androidx.core.content.ContextCompat.startActivity
+import androidx.appcompat.app.AppCompatActivity
 import com.example.befitapp.databinding.ActivityLoginBinding
 import com.google.android.material.textfield.TextInputLayout
 
 class LoginActivity : AppCompatActivity() {
-    private lateinit var emailEditText: EditText
-    private lateinit var passwordEditText: EditText
+    private lateinit var emailTextInputLayout: TextInputLayout
+    private lateinit var passwordTextInputLayout: TextInputLayout
     private lateinit var loginButton: Button
     private lateinit var binding: ActivityLoginBinding
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -24,24 +23,44 @@ class LoginActivity : AppCompatActivity() {
         binding.loginSubTitle.setOnClickListener {
             startActivity(Intent(this, RegisterActivity::class.java))
         }
-
-        val emailInputLayout = findViewById<TextInputLayout>(R.id.ipt_email)
-        emailEditText = emailInputLayout.editText!!
-
-        val passwordInputLayout = findViewById<TextInputLayout>(R.id.ipt_password)
-        passwordEditText = passwordInputLayout.editText!!
+        emailTextInputLayout = findViewById(R.id.ipt_email)
+        passwordTextInputLayout = findViewById(R.id.ipt_password)
 
         loginButton = findViewById(R.id.btn_login)
 
+
         loginButton.setOnClickListener {
-            val username = emailEditText.text.toString()
-            val password = passwordEditText.text.toString()
-            authenticateUser(username, password)
+            val email = emailTextInputLayout.editText?.text.toString()
+            val password = passwordTextInputLayout.editText?.text.toString()
+            authenticateUser(email, password)
+
+            fun isValidEmail(email: String): Boolean {
+                val emailPattern = "[a-zA-Z0-9._-]+@[a-z]+[a-z]+\\.com"
+                return email.matches(emailPattern.toRegex())
+            }
+
+            if (email.isEmpty() || password.isEmpty()) {
+                if (email.isEmpty()) {
+                    emailTextInputLayout.error = "Por favor, insira um e-mail."
+                }
+                if (password.isEmpty()) {
+                    passwordTextInputLayout.error = "Por favor, insira uma senha."
+                }
+
+            } else if (!isValidEmail(email)) {
+                emailTextInputLayout.error = "Por favor, insira um e-mail válido."
+                Toast.makeText(this, "Email inválido.", Toast.LENGTH_SHORT).show()
+            } else {
+                val intent = Intent(this, LoginActivity::class.java)
+                startActivity(intent)
+            }
         }
+
+
     }
 
-    private fun authenticateUser(username: String, password: String) {
-        if (isValidUser(username, password)) {
+    private fun authenticateUser(email: String, password: String) {
+        if (isValidUser(email, password)) {
             val intent = Intent(this, HomeActivity::class.java)
             startActivity(intent)
         } else {
@@ -51,8 +70,10 @@ class LoginActivity : AppCompatActivity() {
     }
 
     private fun isValidUser(username: String, password: String): Boolean {
-        // Aqui você pode adicionar a lógica para verificar se as credenciais do usuário estão corretas
-        // Por exemplo, você pode fazer uma verificação de usuário e senha na API do seu backend
         return (username == "123" && password == "123")
     }
+
+
+
+
 }

@@ -4,12 +4,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:name=".MyApplication"
     tools:context=".HomeActivity">
+
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@drawable/app_gradient"
+        android:background="@drawable/gradientlight"
         android:orientation="vertical">
 
         <LinearLayout
@@ -63,9 +65,10 @@
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:layout_gravity="bottom"
-            app:itemIconTint="#020202"
-            app:itemTextColor="#000000"
-            app:menu="@menu/bottom_navigation_menu" />
+
+            app:menu="@menu/bottom_navigation_menu"
+            style="@style/bottom_navigation"
+            />
 
     </LinearLayout>
 
