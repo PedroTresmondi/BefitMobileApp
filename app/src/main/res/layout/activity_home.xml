@@ -28,7 +28,7 @@
                 android:layout_gravity="center"
                 android:text="Nome da activity"
                 android:textColor="#000000"
-                android:textSize="30sp" />
+                android:textSize="18sp" />
 
             <View
                 android:layout_width="0dp"
@@ -36,12 +36,12 @@
                 android:layout_weight="1" />
 
             <ImageView
-                android:id="@+id/item_imagem"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
+                android:id="@+id/menu_config"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
                 android:layout_gravity="center"
-                android:scaleY="2.3"
-                android:src="@drawable/logo" />
+                android:clickable="true"
+                android:src="@drawable/baseline_menu_24" />
         </LinearLayout>
 
         <LinearLayout
