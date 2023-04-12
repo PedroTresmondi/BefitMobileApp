@@ -1,15 +1,22 @@
 package com.example.befitapp.service
 
-import com.example.befitapp.entity.PlaceResponse
+import com.example.befitapp.entity.Catalogo
+import retrofit2.Call
+import retrofit2.http.DELETE
 import retrofit2.http.GET
-import retrofit2.http.Query
+import retrofit2.http.POST
+import retrofit2.http.Path
 
-interface MapApiService {
-    @GET("json")
-    suspend fun getGyms(
-        @Query("location") location: String,
-        @Query("radius") radius: Int? = 2000,
-        @Query("types") types: String? = "gym",
-        @Query("key") key: String? = "AIzaSyAghQgS67kmlLDvmOBAlyf7UDEjEmH_0R8"
-    ): PlaceResponse
+
+interface BeFitApiService {
+
+    @GET("/treinos/catalogo/{personId}")
+    fun getTreinos(@Path("personId") personId: String): Call<List<Catalogo>>
+
+    @POST("/treinos/favoritar/{personId}/{treinoId}")
+    fun favoritar(@Path("personId") personId: String, @Path("treinoId") treinoId: Int): Call<String>
+
+    @DELETE("/treinos/desfavoritar/{personId}/{treinoId}")
+    fun desfavoritar(@Path("personId") personId: String, @Path("treinoId") treinoId: Int): Call<String>
+
 }

@@ -37,7 +37,10 @@ class HomeActivity : AppCompatActivity() {
                     true
                 }
                 R.id.menu_diet -> {
-                    // Ação a ser executada quando o item "dieta" for selecionado
+                    val fragment = DietaFragment()
+                    supportFragmentManager.beginTransaction()
+                        .add(R.id.fragment_container, fragment)
+                        .commit()
                     topTextView.text = "Dietas"
                     true
                 }

@@ -10,8 +10,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.befitapp.entity.Catalogo
 import com.squareup.picasso.Picasso
 
-class CatalogoTreinoAdapter(private val listaTreinos: List<Catalogo>) :
-    RecyclerView.Adapter<CatalogoTreinoAdapter.CatalogoViewHolder>() {
+class CatalogoDietaAdapter(private val listaDietas: List<Catalogo>) :
+    RecyclerView.Adapter<CatalogoDietaAdapter.CatalogoViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CatalogoViewHolder {
         val view = LayoutInflater.from(parent.context)
@@ -20,28 +20,28 @@ class CatalogoTreinoAdapter(private val listaTreinos: List<Catalogo>) :
     }
 
     override fun onBindViewHolder(holder: CatalogoViewHolder, position: Int) {
-        val treino = listaTreinos[position]
-        holder.bindView(treino)
+        val dieta = listaDietas[position]
+        holder.bindView(dieta)
     }
 
     override fun getItemCount(): Int {
-        return listaTreinos.size
+        return listaDietas.size
     }
 
     inner class CatalogoViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        private val imagemTreino: ImageView = itemView.findViewById(R.id.imagem_catalogo)
-        private val nomeTreino: TextView = itemView.findViewById(R.id.nome_treino_catalogo)
-        private val descricaoTreino: TextView = itemView.findViewById(R.id.descricao_treino_catalogo)
-        private val likeButton: ImageButton = itemView.findViewById(R.id.like_treino_catalogo)
+        private val imagemDieta: ImageView = itemView.findViewById(R.id.imagem_catalogo)
+        private val nomeDieta: TextView = itemView.findViewById(R.id.nome_catalogo)
+        private val descricaoDieta: TextView = itemView.findViewById(R.id.descricao_catalogo)
+        private val likeButton: ImageButton = itemView.findViewById(R.id.like_catalogo)
 
-        fun bindView(treino: Catalogo) {
-            Picasso.get().load(treino.imagem).into(imagemTreino)
-            nomeTreino.text = treino.nome
-            descricaoTreino.text = treino.descricao
-            likeButton.setImageResource(if (treino.favoritado) R.drawable.ic_like_vermelho else R.drawable.ic_like)
+        fun bindView(dieta: Catalogo) {
+            Picasso.get().load(dieta.imagem).into(imagemDieta)
+            nomeDieta.text = dieta.nome
+            descricaoDieta.text = dieta.descricao
+            likeButton.setImageResource(if (dieta.favoritado) R.drawable.ic_like_vermelho else R.drawable.ic_like)
             likeButton.setOnClickListener {
-                treino.favoritado = !treino.favoritado
-                likeButton.setImageResource(if (treino.favoritado) R.drawable.ic_like_vermelho else R.drawable.ic_like)
+                dieta.favoritado = !dieta.favoritado
+                likeButton.setImageResource(if (dieta.favoritado) R.drawable.ic_like_vermelho else R.drawable.ic_like)
             }
         }
     }

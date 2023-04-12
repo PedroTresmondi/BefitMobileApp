@@ -11,7 +11,7 @@ import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.befitapp.entity.ApiService
+import com.example.befitapp.service.MapApiService
 import com.google.android.gms.common.util.CollectionUtils.listOf
 import com.google.android.gms.location.LocationServices
 import com.google.android.gms.maps.CameraUpdateFactory
@@ -150,11 +150,11 @@ class PerfilFragment : Fragment(), OnMapReadyCallback {
             .addConverterFactory(GsonConverterFactory.create())
             .build()
 
-        val apiService = retrofit.create(ApiService::class.java)
+        val mapApiService = retrofit.create(MapApiService::class.java)
 
         GlobalScope.launch(Dispatchers.IO) {
             try {
-                val gyms = apiService.getGyms("$latitude,$longitude")
+                val gyms = mapApiService.getGyms("$latitude,$longitude")
 
                 withContext(Dispatchers.Main) {
                     gyms.results.forEach { gym ->

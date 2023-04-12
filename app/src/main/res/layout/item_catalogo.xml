@@ -1,9 +1,12 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/item"
     android:layout_width="match_parent"
     android:layout_height="150dp"
     android:layout_margin="10dp"
     android:background="@drawable/border_radius"
-    android:orientation="horizontal">
+    android:orientation="horizontal"
+    android:clickable="true"
+    android:focusable="true">
 
     <ImageView
         android:id="@+id/imagem_catalogo"
@@ -20,27 +23,27 @@
         android:orientation="vertical">
 
         <TextView
-            android:id="@+id/nome_treino_catalogo"
+            android:id="@+id/nome_catalogo"
             android:layout_width="150dp"
             android:layout_height="50dp"
             android:layout_marginBottom="10dp"
             android:layout_weight="1"
-            android:text="Nome do treino"
+            android:text="Nome do item"
             android:textColor="#000000"
             android:textSize="25sp" />
 
         <TextView
-            android:id="@+id/descricao_treino_catalogo"
+            android:id="@+id/descricao_catalogo"
             android:layout_width="150dp"
             android:layout_height="50dp"
             android:layout_weight="1"
-            android:text="Descricao do treino"
+            android:text="Descricao do item"
             android:textColor="#4C4C4C"
             android:textSize="15sp" />
     </LinearLayout>
 
     <ImageButton
-        android:id="@+id/like_treino_catalogo"
+        android:id="@+id/like_catalogo"
         android:layout_width="0dp"
         android:layout_height="50dp"
         android:layout_weight="1"

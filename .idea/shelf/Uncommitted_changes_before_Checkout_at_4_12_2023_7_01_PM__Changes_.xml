@@ -1,0 +1,14 @@
+<changelist name="Uncommitted_changes_before_Checkout_at_4_12_2023_7_01_PM_[Changes]" date="1681336866680" recycled="true" deleted="true">
+  <option name="PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_4_12_2023_7_01_PM_[Changes]/shelved.patch" />
+  <option name="DESCRIPTION" value="Uncommitted changes before Checkout at 4/12/2023 7:01 PM [Changes]" />
+  <binary>
+    <option name="BEFORE_PATH" />
+    <option name="AFTER_PATH" value="app/src/main/res/drawable-v24/gradientdark.jpeg" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_4_12_2023_7_01_PM_[Changes]/gradientdark.jpeg" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" />
+    <option name="AFTER_PATH" value="app/src/main/res/drawable-v24/gradientlight.jpeg" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_4_12_2023_7_01_PM_[Changes]/gradientlight.jpeg" />
+  </binary>
+</changelist>

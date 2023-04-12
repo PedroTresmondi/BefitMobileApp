@@ -1,0 +1,702 @@
+Index: app/src/main/res/layout/fragment_dieta.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"utf-8\"?>\r\n<FrameLayout xmlns:android=\"http://schemas.android.com/apk/res/android\"\r\n    xmlns:tools=\"http://schemas.android.com/tools\"\r\n    android:layout_width=\"match_parent\"\r\n    android:layout_height=\"match_parent\"\r\n    tools:context=\".DietaFragment\">\r\n\r\n    <!-- TODO: Update blank fragment layout -->\r\n    <TextView\r\n        android:layout_width=\"match_parent\"\r\n        android:layout_height=\"match_parent\"\r\n        android:text=\"@string/hello_blank_fragment\" />\r\n\r\n</FrameLayout>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/res/layout/fragment_dieta.xml b/app/src/main/res/layout/fragment_dieta.xml
+--- a/app/src/main/res/layout/fragment_dieta.xml	(revision 7ce582d4b4f7464f0b879aaf9637e7ac38bc207d)
++++ b/app/src/main/res/layout/fragment_dieta.xml	(date 1681259651667)
+@@ -5,10 +5,18 @@
+     android:layout_height="match_parent"
+     tools:context=".DietaFragment">
+ 
+-    <!-- TODO: Update blank fragment layout -->
+-    <TextView
++    <LinearLayout
+         android:layout_width="match_parent"
+         android:layout_height="match_parent"
+-        android:text="@string/hello_blank_fragment" />
++        android:background="#00000000"
++        android:orientation="vertical">
++
++        <androidx.recyclerview.widget.RecyclerView
++            android:id="@+id/recycler_view_dieta_catalogo"
++            android:layout_width="match_parent"
++            android:layout_height="match_parent"
++            android:layout_margin="10dp"/>
++
++    </LinearLayout>
+ 
+ </FrameLayout>
+\ No newline at end of file
+Index: app/src/main/res/values/colors.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"utf-8\"?>\r\n<resources>\r\n    <color name=\"purple_200\">#FFBB86FC</color>\r\n    <color name=\"purple_500\">#FF6200EE</color>\r\n    <color name=\"purple_700\">#FF3700B3</color>\r\n    <color name=\"teal_200\">#FF03DAC5</color>\r\n    <color name=\"teal_700\">#FF018786</color>\r\n    <color name=\"black\">#FF000000</color>\r\n    <color name=\"white\">#FFFFFFFF</color>\r\n    <color name=\"primary_color\">#3918D9</color>\r\n    <color name=\"grey\">#8B8B8B</color>\r\n    <color name=\"light_grey\">#D9D9D9</color>\r\n    <color name=\"dark_grey\">#717171</color>\r\n\r\n</resources>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/res/values/colors.xml b/app/src/main/res/values/colors.xml
+--- a/app/src/main/res/values/colors.xml	(revision 7ce582d4b4f7464f0b879aaf9637e7ac38bc207d)
++++ b/app/src/main/res/values/colors.xml	(date 1681260684822)
+@@ -11,5 +11,5 @@
+     <color name="grey">#8B8B8B</color>
+     <color name="light_grey">#D9D9D9</color>
+     <color name="dark_grey">#717171</color>
+-
++    <color name="background_color">#DF0A0A</color>
+ </resources>
+\ No newline at end of file
+Index: app/src/main/java/com/example/befitapp/service/BeFitApiService.kt
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.example.befitapp.service\r\n\r\nimport com.example.befitapp.entity.PlaceResponse\r\nimport retrofit2.http.GET\r\nimport retrofit2.http.Query\r\n\r\ninterface MapApiService {\r\n    @GET(\"json\")\r\n    suspend fun getGyms(\r\n        @Query(\"location\") location: String,\r\n        @Query(\"radius\") radius: Int? = 2000,\r\n        @Query(\"types\") types: String? = \"gym\",\r\n        @Query(\"key\") key: String? = \"AIzaSyAghQgS67kmlLDvmOBAlyf7UDEjEmH_0R8\"\r\n    ): PlaceResponse\r\n}
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/java/com/example/befitapp/service/BeFitApiService.kt b/app/src/main/java/com/example/befitapp/service/BeFitApiService.kt
+--- a/app/src/main/java/com/example/befitapp/service/BeFitApiService.kt	(revision 7ce582d4b4f7464f0b879aaf9637e7ac38bc207d)
++++ b/app/src/main/java/com/example/befitapp/service/BeFitApiService.kt	(date 1681258327021)
+@@ -1,15 +1,22 @@
+ package com.example.befitapp.service
+ 
+-import com.example.befitapp.entity.PlaceResponse
++import com.example.befitapp.entity.Catalogo
++import retrofit2.Call
++import retrofit2.http.DELETE
+ import retrofit2.http.GET
+-import retrofit2.http.Query
++import retrofit2.http.POST
++import retrofit2.http.Path
++
+ 
+-interface MapApiService {
+-    @GET("json")
+-    suspend fun getGyms(
+-        @Query("location") location: String,
+-        @Query("radius") radius: Int? = 2000,
+-        @Query("types") types: String? = "gym",
+-        @Query("key") key: String? = "AIzaSyAghQgS67kmlLDvmOBAlyf7UDEjEmH_0R8"
+-    ): PlaceResponse
++interface BeFitApiService {
++
++    @GET("/treinos/catalogo/{personId}")
++    fun getTreinos(@Path("personId") personId: String): Call<List<Catalogo>>
++
++    @POST("/treinos/favoritar/{personId}/{treinoId}")
++    fun favoritar(@Path("personId") personId: String, @Path("treinoId") treinoId: Int): Call<String>
++
++    @DELETE("/treinos/desfavoritar/{personId}/{treinoId}")
++    fun desfavoritar(@Path("personId") personId: String, @Path("treinoId") treinoId: Int): Call<String>
++
+ }
+\ No newline at end of file
+Index: app/src/main/java/com/example/befitapp/HomeActivity.kt
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.example.befitapp\r\n\r\nimport androidx.appcompat.app.AppCompatActivity\r\nimport android.os.Bundle\r\nimport android.widget.TextView\r\nimport com.google.android.material.bottomnavigation.BottomNavigationView\r\n\r\nclass HomeActivity : AppCompatActivity() {\r\n    override fun onCreate(savedInstanceState: Bundle?) {\r\n        super.onCreate(savedInstanceState)\r\n        setContentView(R.layout.activity_home)\r\n\r\n        val bottomNavigationView = findViewById<BottomNavigationView>(R.id.bottom_navigation)\r\n        var topTextView = findViewById<TextView>(R.id.top_navigation)\r\n        topTextView.text = \"Perfil\"\r\n\r\n        supportFragmentManager.beginTransaction()\r\n            .add(R.id.fragment_container, PerfilFragment())\r\n            .commit()\r\n\r\n        bottomNavigationView.setOnItemSelectedListener { menuItem ->\r\n            when (menuItem.itemId) {\r\n                R.id.menu_training -> {\r\n                    val fragment = TreinoFragment()\r\n                    supportFragmentManager.beginTransaction()\r\n                        .add(R.id.fragment_container, fragment)\r\n                        .commit()\r\n                    topTextView.text = \"Treinos\"\r\n                    true\r\n                }\r\n                R.id.menu_profile -> {\r\n                    val fragment = PerfilFragment()\r\n                    supportFragmentManager.beginTransaction()\r\n                        .add(R.id.fragment_container, fragment)\r\n                        .commit()\r\n                    topTextView.text = \"Perfil\"\r\n                    true\r\n                }\r\n                R.id.menu_diet -> {\r\n                    // Ação a ser executada quando o item \"dieta\" for selecionado\r\n                    topTextView.text = \"Dietas\"\r\n                    true\r\n                }\r\n                else -> false\r\n            }\r\n        }\r\n\r\n    }\r\n}
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/java/com/example/befitapp/HomeActivity.kt b/app/src/main/java/com/example/befitapp/HomeActivity.kt
+--- a/app/src/main/java/com/example/befitapp/HomeActivity.kt	(revision 7ce582d4b4f7464f0b879aaf9637e7ac38bc207d)
++++ b/app/src/main/java/com/example/befitapp/HomeActivity.kt	(date 1681258327013)
+@@ -37,7 +37,10 @@
+                     true
+                 }
+                 R.id.menu_diet -> {
+-                    // Ação a ser executada quando o item "dieta" for selecionado
++                    val fragment = DietaFragment()
++                    supportFragmentManager.beginTransaction()
++                        .add(R.id.fragment_container, fragment)
++                        .commit()
+                     topTextView.text = "Dietas"
+                     true
+                 }
+Index: app/src/main/java/com/example/befitapp/entity/Catalogo.kt
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.example.befitapp.entity\r\n\r\ndata class Catalogo (\r\n    val nome: String,\r\n    val descricao: String,\r\n    val imagem: String,\r\n    var favoritado: Boolean\r\n)
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/java/com/example/befitapp/entity/Catalogo.kt b/app/src/main/java/com/example/befitapp/entity/Catalogo.kt
+--- a/app/src/main/java/com/example/befitapp/entity/Catalogo.kt	(revision 7ce582d4b4f7464f0b879aaf9637e7ac38bc207d)
++++ b/app/src/main/java/com/example/befitapp/entity/Catalogo.kt	(date 1681258327082)
+@@ -1,6 +1,7 @@
+ package com.example.befitapp.entity
+ 
+ data class Catalogo (
++    val id: Int,
+     val nome: String,
+     val descricao: String,
+     val imagem: String,
+Index: app/src/main/java/com/example/befitapp/PerfilFragment.kt
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.example.befitapp\r\n\r\nimport android.Manifest\r\nimport android.content.pm.PackageManager\r\nimport android.os.Bundle\r\nimport android.view.LayoutInflater\r\nimport android.view.View\r\nimport android.view.ViewGroup\r\nimport android.widget.Toast\r\nimport androidx.core.content.ContextCompat\r\nimport androidx.fragment.app.Fragment\r\nimport androidx.recyclerview.widget.LinearLayoutManager\r\nimport androidx.recyclerview.widget.RecyclerView\r\nimport com.example.befitapp.entity.ApiService\r\nimport com.google.android.gms.common.util.CollectionUtils.listOf\r\nimport com.google.android.gms.location.LocationServices\r\nimport com.google.android.gms.maps.CameraUpdateFactory\r\nimport com.google.android.gms.maps.GoogleMap\r\nimport com.google.android.gms.maps.MapView\r\nimport com.google.android.gms.maps.OnMapReadyCallback\r\nimport com.google.android.gms.maps.model.LatLng\r\nimport com.google.android.gms.maps.model.MarkerOptions\r\nimport kotlinx.coroutines.Dispatchers\r\nimport kotlinx.coroutines.GlobalScope\r\nimport kotlinx.coroutines.launch\r\nimport kotlinx.coroutines.withContext\r\nimport retrofit2.Retrofit\r\nimport retrofit2.converter.gson.GsonConverterFactory\r\n\r\nclass PerfilFragment : Fragment(), OnMapReadyCallback {\r\n\r\n    private lateinit var mapView: MapView\r\n    private lateinit var googleMap: GoogleMap\r\n\r\n    private val listaTreinos = listOf(\r\n        \"Treino A\",\r\n        \"Treino B\",\r\n        \"Treino C\"\r\n    )\r\n\r\n    private val listaDietas = listOf(\r\n        \"Dieta A\",\r\n        \"Dieta B\",\r\n        \"Dieta C\"\r\n    )\r\n\r\n    override fun onCreateView(\r\n        inflater: LayoutInflater,\r\n        container: ViewGroup?,\r\n        savedInstanceState: Bundle?\r\n    ): View? {\r\n        val view = inflater.inflate(R.layout.fragment_perfil, container, false)\r\n\r\n        val recyclerViewTreinos: RecyclerView = view.findViewById(R.id.recycler_view_treinos)\r\n        recyclerViewTreinos.layoutManager = LinearLayoutManager(requireContext())\r\n        recyclerViewTreinos.adapter = FavoritoAdapter(listaTreinos, \"treino\")\r\n\r\n        val recyclerViewDietas: RecyclerView = view.findViewById(R.id.recycler_view_dietas)\r\n        recyclerViewDietas.layoutManager = LinearLayoutManager(requireContext())\r\n        recyclerViewDietas.adapter = FavoritoAdapter(listaDietas, \"dieta\")\r\n\r\n        mapView = view.findViewById(R.id.mapView)\r\n        mapView.onCreate(savedInstanceState)\r\n        mapView.getMapAsync(this)\r\n\r\n        return view\r\n    }\r\n\r\n    override fun onRequestPermissionsResult(\r\n        requestCode: Int,\r\n        permissions: Array<String>,\r\n        grantResults: IntArray\r\n    ) {\r\n        if (requestCode == REQUEST_LOCATION_PERMISSION) {\r\n            if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {\r\n                onMapReady(googleMap)\r\n            }\r\n        }\r\n    }\r\n\r\n    override fun onResume() {\r\n        super.onResume()\r\n        mapView.onResume()\r\n    }\r\n\r\n    override fun onPause() {\r\n        super.onPause()\r\n        mapView.onPause()\r\n    }\r\n\r\n    override fun onDestroy() {\r\n        super.onDestroy()\r\n        mapView.onDestroy()\r\n    }\r\n\r\n    override fun onLowMemory() {\r\n        super.onLowMemory()\r\n        mapView.onLowMemory()\r\n    }\r\n\r\n\r\n    override fun onMapReady(map: GoogleMap) {\r\n        map.let {\r\n            googleMap = it\r\n            if (ContextCompat.checkSelfPermission(\r\n                    requireContext(),\r\n                    Manifest.permission.ACCESS_FINE_LOCATION\r\n                ) == PackageManager.PERMISSION_GRANTED\r\n            ) {\r\n                googleMap.isMyLocationEnabled = true\r\n                googleMap.uiSettings.isMyLocationButtonEnabled = true\r\n                googleMap.setOnMyLocationButtonClickListener {\r\n                    Toast.makeText(\r\n                        requireContext(),\r\n                        \"My Location button clicked\",\r\n                        Toast.LENGTH_SHORT\r\n                    ).show()\r\n                    false\r\n                }\r\n                val fusedLocationClient =\r\n                    LocationServices.getFusedLocationProviderClient(requireActivity())\r\n                fusedLocationClient.lastLocation.addOnSuccessListener { location ->\r\n                    if (location != null) {\r\n                        val currentLatLng = LatLng(location.latitude, location.longitude)\r\n\r\n                        requireActivity().runOnUiThread {\r\n                            googleMap.moveCamera(\r\n                                CameraUpdateFactory.newLatLngZoom(\r\n                                    currentLatLng,\r\n                                    15f\r\n                                )\r\n                            )\r\n                        }\r\n\r\n                        createMarkers(currentLatLng.latitude, currentLatLng.longitude, googleMap)\r\n                    }\r\n                }\r\n            } else {\r\n                requestPermissions(\r\n                    arrayOf(Manifest.permission.ACCESS_FINE_LOCATION),\r\n                    REQUEST_LOCATION_PERMISSION\r\n                )\r\n            }\r\n        }\r\n    }\r\n\r\n    private fun createMarkers(latitude: Double, longitude: Double, googleMap: GoogleMap) {\r\n        val retrofit = Retrofit.Builder()\r\n            .baseUrl(\"https://maps.googleapis.com/maps/api/place/nearbysearch/\")\r\n            .addConverterFactory(GsonConverterFactory.create())\r\n            .build()\r\n\r\n        val apiService = retrofit.create(ApiService::class.java)\r\n\r\n        GlobalScope.launch(Dispatchers.IO) {\r\n            try {\r\n                val gyms = apiService.getGyms(\"$latitude,$longitude\")\r\n\r\n                withContext(Dispatchers.Main) {\r\n                    gyms.results.forEach { gym ->\r\n                        googleMap.addMarker(\r\n                            MarkerOptions().position(\r\n                                LatLng(\r\n                                    gym.geometry.location.lat,\r\n                                    gym.geometry.location.lng\r\n                                )\r\n                            ).title(gym.name.replace(\"\\\"\", \"\"))\r\n                                .snippet(gym.vicinity.replace(\"\\\"\", \"\"))\r\n                        )\r\n                    }\r\n                }\r\n            } catch (e: Exception) {\r\n                println(\"Error: ${e.message}\")\r\n            }\r\n        }\r\n    }\r\n\r\n\r\n    companion object {\r\n        private const val REQUEST_LOCATION_PERMISSION = 1\r\n    }\r\n}
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/java/com/example/befitapp/PerfilFragment.kt b/app/src/main/java/com/example/befitapp/PerfilFragment.kt
+--- a/app/src/main/java/com/example/befitapp/PerfilFragment.kt	(revision 7ce582d4b4f7464f0b879aaf9637e7ac38bc207d)
++++ b/app/src/main/java/com/example/befitapp/PerfilFragment.kt	(date 1681258327245)
+@@ -11,7 +11,7 @@
+ import androidx.fragment.app.Fragment
+ import androidx.recyclerview.widget.LinearLayoutManager
+ import androidx.recyclerview.widget.RecyclerView
+-import com.example.befitapp.entity.ApiService
++import com.example.befitapp.service.MapApiService
+ import com.google.android.gms.common.util.CollectionUtils.listOf
+ import com.google.android.gms.location.LocationServices
+ import com.google.android.gms.maps.CameraUpdateFactory
+@@ -150,11 +150,11 @@
+             .addConverterFactory(GsonConverterFactory.create())
+             .build()
+ 
+-        val apiService = retrofit.create(ApiService::class.java)
++        val mapApiService = retrofit.create(MapApiService::class.java)
+ 
+         GlobalScope.launch(Dispatchers.IO) {
+             try {
+-                val gyms = apiService.getGyms("$latitude,$longitude")
++                val gyms = mapApiService.getGyms("$latitude,$longitude")
+ 
+                 withContext(Dispatchers.Main) {
+                     gyms.results.forEach { gym ->
+Index: app/src/main/java/com/example/befitapp/CatalogoDietaAdapter.kt
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.example.befitapp\r\n\r\nimport android.view.LayoutInflater\r\nimport android.view.View\r\nimport android.view.ViewGroup\r\nimport android.widget.ImageButton\r\nimport android.widget.ImageView\r\nimport android.widget.TextView\r\nimport androidx.recyclerview.widget.RecyclerView\r\nimport com.example.befitapp.entity.Catalogo\r\nimport com.squareup.picasso.Picasso\r\n\r\nclass CatalogoTreinoAdapter(private val listaTreinos: List<Catalogo>) :\r\n    RecyclerView.Adapter<CatalogoTreinoAdapter.CatalogoViewHolder>() {\r\n\r\n    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CatalogoViewHolder {\r\n        val view = LayoutInflater.from(parent.context)\r\n            .inflate(R.layout.item_catalogo, parent, false)\r\n        return CatalogoViewHolder(view)\r\n    }\r\n\r\n    override fun onBindViewHolder(holder: CatalogoViewHolder, position: Int) {\r\n        val treino = listaTreinos[position]\r\n        holder.bindView(treino)\r\n    }\r\n\r\n    override fun getItemCount(): Int {\r\n        return listaTreinos.size\r\n    }\r\n\r\n    inner class CatalogoViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {\r\n        private val imagemTreino: ImageView = itemView.findViewById(R.id.imagem_catalogo)\r\n        private val nomeTreino: TextView = itemView.findViewById(R.id.nome_treino_catalogo)\r\n        private val descricaoTreino: TextView = itemView.findViewById(R.id.descricao_treino_catalogo)\r\n        private val likeButton: ImageButton = itemView.findViewById(R.id.like_treino_catalogo)\r\n\r\n        fun bindView(treino: Catalogo) {\r\n            Picasso.get().load(treino.imagem).into(imagemTreino)\r\n            nomeTreino.text = treino.nome\r\n            descricaoTreino.text = treino.descricao\r\n            likeButton.setImageResource(if (treino.favoritado) R.drawable.ic_like_vermelho else R.drawable.ic_like)\r\n            likeButton.setOnClickListener {\r\n                treino.favoritado = !treino.favoritado\r\n                likeButton.setImageResource(if (treino.favoritado) R.drawable.ic_like_vermelho else R.drawable.ic_like)\r\n            }\r\n        }\r\n    }\r\n}\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/java/com/example/befitapp/CatalogoDietaAdapter.kt b/app/src/main/java/com/example/befitapp/CatalogoDietaAdapter.kt
+--- a/app/src/main/java/com/example/befitapp/CatalogoDietaAdapter.kt	(revision 7ce582d4b4f7464f0b879aaf9637e7ac38bc207d)
++++ b/app/src/main/java/com/example/befitapp/CatalogoDietaAdapter.kt	(date 1681258326994)
+@@ -10,8 +10,8 @@
+ import com.example.befitapp.entity.Catalogo
+ import com.squareup.picasso.Picasso
+ 
+-class CatalogoTreinoAdapter(private val listaTreinos: List<Catalogo>) :
+-    RecyclerView.Adapter<CatalogoTreinoAdapter.CatalogoViewHolder>() {
++class CatalogoDietaAdapter(private val listaDietas: List<Catalogo>) :
++    RecyclerView.Adapter<CatalogoDietaAdapter.CatalogoViewHolder>() {
+ 
+     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CatalogoViewHolder {
+         val view = LayoutInflater.from(parent.context)
+@@ -20,28 +20,28 @@
+     }
+ 
+     override fun onBindViewHolder(holder: CatalogoViewHolder, position: Int) {
+-        val treino = listaTreinos[position]
+-        holder.bindView(treino)
++        val dieta = listaDietas[position]
++        holder.bindView(dieta)
+     }
+ 
+     override fun getItemCount(): Int {
+-        return listaTreinos.size
++        return listaDietas.size
+     }
+ 
+     inner class CatalogoViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+-        private val imagemTreino: ImageView = itemView.findViewById(R.id.imagem_catalogo)
+-        private val nomeTreino: TextView = itemView.findViewById(R.id.nome_treino_catalogo)
+-        private val descricaoTreino: TextView = itemView.findViewById(R.id.descricao_treino_catalogo)
+-        private val likeButton: ImageButton = itemView.findViewById(R.id.like_treino_catalogo)
++        private val imagemDieta: ImageView = itemView.findViewById(R.id.imagem_catalogo)
++        private val nomeDieta: TextView = itemView.findViewById(R.id.nome_catalogo)
++        private val descricaoDieta: TextView = itemView.findViewById(R.id.descricao_catalogo)
++        private val likeButton: ImageButton = itemView.findViewById(R.id.like_catalogo)
+ 
+-        fun bindView(treino: Catalogo) {
+-            Picasso.get().load(treino.imagem).into(imagemTreino)
+-            nomeTreino.text = treino.nome
+-            descricaoTreino.text = treino.descricao
+-            likeButton.setImageResource(if (treino.favoritado) R.drawable.ic_like_vermelho else R.drawable.ic_like)
++        fun bindView(dieta: Catalogo) {
++            Picasso.get().load(dieta.imagem).into(imagemDieta)
++            nomeDieta.text = dieta.nome
++            descricaoDieta.text = dieta.descricao
++            likeButton.setImageResource(if (dieta.favoritado) R.drawable.ic_like_vermelho else R.drawable.ic_like)
+             likeButton.setOnClickListener {
+-                treino.favoritado = !treino.favoritado
+-                likeButton.setImageResource(if (treino.favoritado) R.drawable.ic_like_vermelho else R.drawable.ic_like)
++                dieta.favoritado = !dieta.favoritado
++                likeButton.setImageResource(if (dieta.favoritado) R.drawable.ic_like_vermelho else R.drawable.ic_like)
+             }
+         }
+     }
+Index: app/src/main/java/com/example/befitapp/TreinoFragment.kt
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.example.befitapp\r\n\r\nimport android.os.Bundle\r\nimport androidx.fragment.app.Fragment\r\nimport android.view.LayoutInflater\r\nimport android.view.View\r\nimport android.view.ViewGroup\r\nimport androidx.recyclerview.widget.LinearLayoutManager\r\nimport androidx.recyclerview.widget.RecyclerView\r\nimport com.example.befitapp.entity.Catalogo\r\nimport com.google.android.gms.common.util.CollectionUtils.listOf\r\n\r\n\r\nclass TreinoFragment : Fragment() {\r\n\r\n    private val listaTreinos = listOf(\r\n        Catalogo(\"TreinoA\", \"descricaoA\", \"https://saude.abril.com.br/wp-content/uploads/2020/05/treino-em-casa.png?w=680&h=453&crop=1\", true),\r\n        Catalogo(\"TreinoB\", \"descricaoB\", \"https://saude.abril.com.br/wp-content/uploads/2020/05/treino-em-casa.png?w=680&h=453&crop=1\", false),\r\n        Catalogo(\"TreinoC\", \"descricaoC\", \"https://saude.abril.com.br/wp-content/uploads/2020/05/treino-em-casa.png?w=680&h=453&crop=1\", false),\r\n        Catalogo(\"TreinoD\", \"descricaoD\", \"https://saude.abril.com.br/wp-content/uploads/2020/05/treino-em-casa.png?w=680&h=453&crop=1\", true),\r\n        Catalogo(\"TreinoE\", \"descricaoE\", \"https://saude.abril.com.br/wp-content/uploads/2020/05/treino-em-casa.png?w=680&h=453&crop=1\", false),\r\n        Catalogo(\"TreinoF\", \"descricaoF\", \"https://saude.abril.com.br/wp-content/uploads/2020/05/treino-em-casa.png?w=680&h=453&crop=1\", true),\r\n    )\r\n\r\n    private val adapter = CatalogoAdapter(listaTreinos)\r\n\r\n    override fun onCreateView(\r\n        inflater: LayoutInflater, container: ViewGroup?,\r\n        savedInstanceState: Bundle?\r\n    ): View? {\r\n        val view = inflater.inflate(R.layout.fragment_treino, container, false)\r\n\r\n        val recyclerView: RecyclerView = view.findViewById(R.id.recycler_view_treino_catalogo)\r\n        recyclerView.layoutManager = LinearLayoutManager(context)\r\n        recyclerView.adapter = adapter\r\n\r\n        return view\r\n    }\r\n}\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/java/com/example/befitapp/TreinoFragment.kt b/app/src/main/java/com/example/befitapp/TreinoFragment.kt
+--- a/app/src/main/java/com/example/befitapp/TreinoFragment.kt	(revision 7ce582d4b4f7464f0b879aaf9637e7ac38bc207d)
++++ b/app/src/main/java/com/example/befitapp/TreinoFragment.kt	(date 1681258326986)
+@@ -1,29 +1,26 @@
+ package com.example.befitapp
+ 
+ import android.os.Bundle
+-import androidx.fragment.app.Fragment
+ import android.view.LayoutInflater
+ import android.view.View
+ import android.view.ViewGroup
++import android.widget.Toast
++import androidx.fragment.app.Fragment
+ import androidx.recyclerview.widget.LinearLayoutManager
+ import androidx.recyclerview.widget.RecyclerView
+ import com.example.befitapp.entity.Catalogo
+-import com.google.android.gms.common.util.CollectionUtils.listOf
++import com.example.befitapp.service.BeFitApiService
++import com.google.gson.GsonBuilder
++import retrofit2.Call
++import retrofit2.Callback
++import retrofit2.Response
++import retrofit2.Retrofit
++import retrofit2.converter.gson.GsonConverterFactory
+ 
++val GLOBAL_PERSONID_NAME: String = "5bb7a32c-20ff-42d2-b684-33bf61f6eb13"
+ 
+ class TreinoFragment : Fragment() {
+ 
+-    private val listaTreinos = listOf(
+-        Catalogo("TreinoA", "descricaoA", "https://saude.abril.com.br/wp-content/uploads/2020/05/treino-em-casa.png?w=680&h=453&crop=1", true),
+-        Catalogo("TreinoB", "descricaoB", "https://saude.abril.com.br/wp-content/uploads/2020/05/treino-em-casa.png?w=680&h=453&crop=1", false),
+-        Catalogo("TreinoC", "descricaoC", "https://saude.abril.com.br/wp-content/uploads/2020/05/treino-em-casa.png?w=680&h=453&crop=1", false),
+-        Catalogo("TreinoD", "descricaoD", "https://saude.abril.com.br/wp-content/uploads/2020/05/treino-em-casa.png?w=680&h=453&crop=1", true),
+-        Catalogo("TreinoE", "descricaoE", "https://saude.abril.com.br/wp-content/uploads/2020/05/treino-em-casa.png?w=680&h=453&crop=1", false),
+-        Catalogo("TreinoF", "descricaoF", "https://saude.abril.com.br/wp-content/uploads/2020/05/treino-em-casa.png?w=680&h=453&crop=1", true),
+-    )
+-
+-    private val adapter = CatalogoAdapter(listaTreinos)
+-
+     override fun onCreateView(
+         inflater: LayoutInflater, container: ViewGroup?,
+         savedInstanceState: Bundle?
+@@ -32,7 +29,28 @@
+ 
+         val recyclerView: RecyclerView = view.findViewById(R.id.recycler_view_treino_catalogo)
+         recyclerView.layoutManager = LinearLayoutManager(context)
+-        recyclerView.adapter = adapter
++        recyclerView.adapter = CatalogoTreinoAdapter(emptyList())
++
++        val call = Retrofit.Builder()
++            .baseUrl("http://10.0.2.2:8080/")
++            .addConverterFactory(GsonConverterFactory.create(GsonBuilder().create()))
++            .build().let {
++                it.create(BeFitApiService::class.java).getTreinos(GLOBAL_PERSONID_NAME)
++            }
++
++        call.enqueue(object : Callback<List<Catalogo>> {
++            override fun onResponse(call: Call<List<Catalogo>>, response: Response<List<Catalogo>>) {
++                if (response.isSuccessful) {
++                    response.body()?.let {
++                        recyclerView.adapter = CatalogoTreinoAdapter(it)
++                    }
++                }
++            }
++
++            override fun onFailure(call: Call<List<Catalogo>>, t: Throwable) {
++                Toast.makeText(context, "Network Error", Toast.LENGTH_SHORT).show()
++            }
++        })
+ 
+         return view
+     }
+Index: app/src/main/res/drawable/app_gradient_dark.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/res/drawable/app_gradient_dark.xml b/app/src/main/res/drawable/app_gradient_dark.xml
+new file mode 100644
+--- /dev/null	(date 1681258999289)
++++ b/app/src/main/res/drawable/app_gradient_dark.xml	(date 1681258999289)
+@@ -0,0 +1,7 @@
++<shape xmlns:android="http://schemas.android.com/apk/res/android"
++    android:shape="rectangle">
++    <gradient
++        android:startColor="#241080"
++        android:endColor="#0E0E0E"
++        android:angle="270" />
++</shape>
+\ No newline at end of file
+Index: app/src/main/java/com/example/befitapp/DietaFragment.kt
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.example.befitapp\r\n\r\nimport android.os.Bundle\r\nimport androidx.fragment.app.Fragment\r\nimport android.view.LayoutInflater\r\nimport android.view.View\r\nimport android.view.ViewGroup\r\n\r\n// TODO: Rename parameter arguments, choose names that match\r\n// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER\r\nprivate const val ARG_PARAM1 = \"param1\"\r\nprivate const val ARG_PARAM2 = \"param2\"\r\n\r\n/**\r\n * A simple [Fragment] subclass.\r\n * Use the [DietaFragment.newInstance] factory method to\r\n * create an instance of this fragment.\r\n */\r\nclass DietaFragment : Fragment() {\r\n    // TODO: Rename and change types of parameters\r\n    private var param1: String? = null\r\n    private var param2: String? = null\r\n\r\n    override fun onCreate(savedInstanceState: Bundle?) {\r\n        super.onCreate(savedInstanceState)\r\n        arguments?.let {\r\n            param1 = it.getString(ARG_PARAM1)\r\n            param2 = it.getString(ARG_PARAM2)\r\n        }\r\n    }\r\n\r\n    override fun onCreateView(\r\n        inflater: LayoutInflater, container: ViewGroup?,\r\n        savedInstanceState: Bundle?\r\n    ): View? {\r\n        // Inflate the layout for this fragment\r\n        return inflater.inflate(R.layout.fragment_dieta, container, false)\r\n    }\r\n\r\n    companion object {\r\n        /**\r\n         * Use this factory method to create a new instance of\r\n         * this fragment using the provided parameters.\r\n         *\r\n         * @param param1 Parameter 1.\r\n         * @param param2 Parameter 2.\r\n         * @return A new instance of fragment DietaFragment.\r\n         */\r\n        // TODO: Rename and change types and number of parameters\r\n        @JvmStatic\r\n        fun newInstance(param1: String, param2: String) =\r\n            DietaFragment().apply {\r\n                arguments = Bundle().apply {\r\n                    putString(ARG_PARAM1, param1)\r\n                    putString(ARG_PARAM2, param2)\r\n                }\r\n            }\r\n    }\r\n}
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/java/com/example/befitapp/DietaFragment.kt b/app/src/main/java/com/example/befitapp/DietaFragment.kt
+--- a/app/src/main/java/com/example/befitapp/DietaFragment.kt	(revision 7ce582d4b4f7464f0b879aaf9637e7ac38bc207d)
++++ b/app/src/main/java/com/example/befitapp/DietaFragment.kt	(date 1681258327063)
+@@ -5,55 +5,69 @@
+ import android.view.LayoutInflater
+ import android.view.View
+ import android.view.ViewGroup
++import androidx.recyclerview.widget.LinearLayoutManager
++import androidx.recyclerview.widget.RecyclerView
++import com.example.befitapp.entity.Catalogo
+ 
+-// TODO: Rename parameter arguments, choose names that match
+-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
+-private const val ARG_PARAM1 = "param1"
+-private const val ARG_PARAM2 = "param2"
+ 
+-/**
+- * A simple [Fragment] subclass.
+- * Use the [DietaFragment.newInstance] factory method to
+- * create an instance of this fragment.
+- */
+ class DietaFragment : Fragment() {
+-    // TODO: Rename and change types of parameters
+-    private var param1: String? = null
+-    private var param2: String? = null
++    private val listaDietas = listOf(
++        Catalogo(
++            1,
++            "DietaA",
++            "descricaoA",
++            "https://cdn-icons-png.flaticon.com/512/815/815128.png",
++            true
++        ),
++        Catalogo(
++            2,
++            "DietaB",
++            "descricaoB",
++            "https://cdn-icons-png.flaticon.com/512/815/815128.png",
++            false
++        ),
++        Catalogo(
++            3,
++            "DietaC",
++            "descricaoC",
++            "https://cdn-icons-png.flaticon.com/512/815/815128.png",
++            false
++        ),
++        Catalogo(
++            4,
++            "DietaD",
++            "descricaoD",
++            "https://cdn-icons-png.flaticon.com/512/815/815128.png",
++            true
++        ),
++        Catalogo(
++            5,
++            "DietaE",
++            "descricaoE",
++            "https://cdn-icons-png.flaticon.com/512/815/815128.png",
++            false
++        ),
++        Catalogo(
++            6,
++            "DietaF",
++            "descricaoF",
++            "https://cdn-icons-png.flaticon.com/512/815/815128.png",
++            true
++        ),
++    )
+ 
+-    override fun onCreate(savedInstanceState: Bundle?) {
+-        super.onCreate(savedInstanceState)
+-        arguments?.let {
+-            param1 = it.getString(ARG_PARAM1)
+-            param2 = it.getString(ARG_PARAM2)
+-        }
+-    }
++    private val adapter = CatalogoDietaAdapter(listaDietas)
+ 
+     override fun onCreateView(
+         inflater: LayoutInflater, container: ViewGroup?,
+         savedInstanceState: Bundle?
+     ): View? {
+-        // Inflate the layout for this fragment
+-        return inflater.inflate(R.layout.fragment_dieta, container, false)
+-    }
++        val view = inflater.inflate(R.layout.fragment_dieta, container, false)
+ 
+-    companion object {
+-        /**
+-         * Use this factory method to create a new instance of
+-         * this fragment using the provided parameters.
+-         *
+-         * @param param1 Parameter 1.
+-         * @param param2 Parameter 2.
+-         * @return A new instance of fragment DietaFragment.
+-         */
+-        // TODO: Rename and change types and number of parameters
+-        @JvmStatic
+-        fun newInstance(param1: String, param2: String) =
+-            DietaFragment().apply {
+-                arguments = Bundle().apply {
+-                    putString(ARG_PARAM1, param1)
+-                    putString(ARG_PARAM2, param2)
+-                }
+-            }
++        val recyclerView: RecyclerView = view.findViewById(R.id.recycler_view_dieta_catalogo)
++        recyclerView.layoutManager = LinearLayoutManager(context)
++        recyclerView.adapter = adapter
++
++        return view
+     }
+ }
+\ No newline at end of file
+Index: app/src/main/res/layout/item_catalogo.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><LinearLayout xmlns:android=\"http://schemas.android.com/apk/res/android\"\r\n    android:layout_width=\"match_parent\"\r\n    android:layout_height=\"150dp\"\r\n    android:layout_margin=\"10dp\"\r\n    android:background=\"@drawable/border_radius\"\r\n    android:orientation=\"horizontal\">\r\n\r\n    <ImageView\r\n        android:id=\"@+id/imagem_catalogo\"\r\n        android:layout_width=\"100dp\"\r\n        android:layout_height=\"100dp\"\r\n        android:layout_gravity=\"center_vertical\"\r\n        android:layout_marginHorizontal=\"10dp\"\r\n        android:src=\"@drawable/ic_treino_catalogo\" />\r\n\r\n    <LinearLayout\r\n        android:layout_width=\"wrap_content\"\r\n        android:layout_height=\"match_parent\"\r\n        android:layout_margin=\"10dp\"\r\n        android:orientation=\"vertical\">\r\n\r\n        <TextView\r\n            android:id=\"@+id/nome_treino_catalogo\"\r\n            android:layout_width=\"150dp\"\r\n            android:layout_height=\"50dp\"\r\n            android:layout_marginBottom=\"10dp\"\r\n            android:layout_weight=\"1\"\r\n            android:text=\"Nome do treino\"\r\n            android:textColor=\"#000000\"\r\n            android:textSize=\"25sp\" />\r\n\r\n        <TextView\r\n            android:id=\"@+id/descricao_treino_catalogo\"\r\n            android:layout_width=\"150dp\"\r\n            android:layout_height=\"50dp\"\r\n            android:layout_weight=\"1\"\r\n            android:text=\"Descricao do treino\"\r\n            android:textColor=\"#4C4C4C\"\r\n            android:textSize=\"15sp\" />\r\n    </LinearLayout>\r\n\r\n    <ImageButton\r\n        android:id=\"@+id/like_treino_catalogo\"\r\n        android:layout_width=\"0dp\"\r\n        android:layout_height=\"50dp\"\r\n        android:layout_weight=\"1\"\r\n        android:background=\"@android:color/transparent\"\r\n        android:scaleType=\"fitCenter\"\r\n        android:scaleX=\"1\"\r\n        android:scaleY=\"1\"\r\n        android:src=\"@drawable/ic_like\"\r\n        android:contentDescription=\"@string/like_buttom\">\r\n    </ImageButton>\r\n\r\n</LinearLayout>\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/res/layout/item_catalogo.xml b/app/src/main/res/layout/item_catalogo.xml
+--- a/app/src/main/res/layout/item_catalogo.xml	(revision 7ce582d4b4f7464f0b879aaf9637e7ac38bc207d)
++++ b/app/src/main/res/layout/item_catalogo.xml	(date 1681258327005)
+@@ -1,9 +1,12 @@
+ <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
++    android:id="@+id/item"
+     android:layout_width="match_parent"
+     android:layout_height="150dp"
+     android:layout_margin="10dp"
+     android:background="@drawable/border_radius"
+-    android:orientation="horizontal">
++    android:orientation="horizontal"
++    android:clickable="true"
++    android:focusable="true">
+ 
+     <ImageView
+         android:id="@+id/imagem_catalogo"
+@@ -20,27 +23,27 @@
+         android:orientation="vertical">
+ 
+         <TextView
+-            android:id="@+id/nome_treino_catalogo"
++            android:id="@+id/nome_catalogo"
+             android:layout_width="150dp"
+             android:layout_height="50dp"
+             android:layout_marginBottom="10dp"
+             android:layout_weight="1"
+-            android:text="Nome do treino"
++            android:text="Nome do item"
+             android:textColor="#000000"
+             android:textSize="25sp" />
+ 
+         <TextView
+-            android:id="@+id/descricao_treino_catalogo"
++            android:id="@+id/descricao_catalogo"
+             android:layout_width="150dp"
+             android:layout_height="50dp"
+             android:layout_weight="1"
+-            android:text="Descricao do treino"
++            android:text="Descricao do item"
+             android:textColor="#4C4C4C"
+             android:textSize="15sp" />
+     </LinearLayout>
+ 
+     <ImageButton
+-        android:id="@+id/like_treino_catalogo"
++        android:id="@+id/like_catalogo"
+         android:layout_width="0dp"
+         android:layout_height="50dp"
+         android:layout_weight="1"
+Index: app/src/main/res/drawable/app_gradient.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/res/drawable/app_gradient.xml b/app/src/main/res/drawable/app_gradient.xml
+new file mode 100644
+--- /dev/null	(date 1681260742932)
++++ b/app/src/main/res/drawable/app_gradient.xml	(date 1681260742932)
+@@ -0,0 +1,4 @@
++<selector xmlns:android="http://schemas.android.com/apk/res/android">
++    <item android:drawable="@drawable/app_gradient_light"/>
++    <item android:drawable="@drawable/app_gradient_dark"/>
++</selector>
+Index: build.gradle
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>// Top-level build file where you can add configuration options common to all sub-projects/modules.\r\nplugins {\r\n    id 'com.android.application' version '7.2.2' apply false\r\n    id 'com.android.library' version '7.2.2' apply false\r\n    id 'org.jetbrains.kotlin.android' version '1.6.10' apply false\r\n}\r\n\r\ntask clean(type: Delete) {\r\n    delete rootProject.buildDir\r\n}
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/build.gradle b/build.gradle
+--- a/build.gradle	(revision 7ce582d4b4f7464f0b879aaf9637e7ac38bc207d)
++++ b/build.gradle	(date 1681258327112)
+@@ -2,7 +2,7 @@
+ plugins {
+     id 'com.android.application' version '7.2.2' apply false
+     id 'com.android.library' version '7.2.2' apply false
+-    id 'org.jetbrains.kotlin.android' version '1.6.10' apply false
++    id 'org.jetbrains.kotlin.android' version '1.7.10' apply false
+ }
+ 
+ task clean(type: Delete) {
+Index: app/src/main/res/drawable/app_gradient_light.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/res/drawable/app_gradient_light.xml b/app/src/main/res/drawable/app_gradient_light.xml
+new file mode 100644
+--- /dev/null	(date 1681258753135)
++++ b/app/src/main/res/drawable/app_gradient_light.xml	(date 1681258753135)
+@@ -0,0 +1,7 @@
++<shape xmlns:android="http://schemas.android.com/apk/res/android"
++    android:shape="rectangle">
++    <gradient
++        android:startColor="#241080"
++        android:endColor="#A3A3A3"
++        android:angle="270" />
++</shape>
+\ No newline at end of file
+Index: .idea/misc.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n<project version=\"4\">\r\n  <component name=\"DesignSurface\">\r\n    <option name=\"filePathToZoomLevelMap\">\r\n      <map>\r\n        <entry key=\"..\\:/Users/User/Documents/Dev/BefitMobileApp/app/src/main/res/drawable-v24/app_gradient.xml\" value=\"0.1945\" />\r\n        <entry key=\"..\\:/Users/User/Documents/Dev/BefitMobileApp/app/src/main/res/drawable-v24/border_radius.xml\" value=\"0.127\" />\r\n        <entry key=\"..\\:/Users/User/Documents/Dev/BefitMobileApp/app/src/main/res/drawable/ic_dieta.xml\" value=\"0.1\" />\r\n        <entry key=\"..\\:/Users/User/Documents/Dev/BefitMobileApp/app/src/main/res/drawable/ic_perfil.xml\" value=\"0.1\" />\r\n        <entry key=\"..\\:/Users/User/Documents/Dev/BefitMobileApp/app/src/main/res/drawable/ic_treino.xml\" value=\"0.1\" />\r\n        <entry key=\"..\\:/Users/User/Documents/Dev/BefitMobileApp/app/src/main/res/layout/activity_home.xml\" value=\"0.22\" />\r\n        <entry key=\"..\\:/Users/User/Documents/Dev/BefitMobileApp/app/src/main/res/layout/activity_login.xml\" value=\"0.20416666666666666\" />\r\n        <entry key=\"..\\:/Users/User/Documents/Dev/BefitMobileApp/app/src/main/res/layout/activity_main.xml\" value=\"0.20416666666666666\" />\r\n        <entry key=\"..\\:/Users/User/Documents/Dev/BefitMobileApp/app/src/main/res/layout/activity_map.xml\" value=\"0.20416666666666666\" />\r\n        <entry key=\"..\\:/Users/User/Documents/Dev/BefitMobileApp/app/src/main/res/layout/activity_register.xml\" value=\"0.20416666666666666\" />\r\n        <entry key=\"..\\:/Users/User/Documents/Dev/BefitMobileApp/app/src/main/res/layout/adicione_dieta.xml\" value=\"0.20416666666666666\" />\r\n        <entry key=\"..\\:/Users/User/Documents/Dev/BefitMobileApp/app/src/main/res/layout/custom_marker_info.xml\" value=\"0.20416666666666666\" />\r\n        <entry key=\"..\\:/Users/User/Documents/Dev/BefitMobileApp/app/src/main/res/layout/fragment_perfil.xml\" value=\"0.20416666666666666\" />\r\n        <entry key=\"..\\:/Users/User/Documents/Dev/BefitMobileApp/app/src/main/res/layout/fragment_treino.xml\" value=\"0.20416666666666666\" />\r\n        <entry key=\"..\\:/Users/User/Documents/Dev/BefitMobileApp/app/src/main/res/layout/item_catalogo.xml\" value=\"0.20416666666666666\" />\r\n        <entry key=\"..\\:/Users/User/Documents/Dev/BefitMobileApp/app/src/main/res/layout/item_favorito.xml\" value=\"0.20416666666666666\" />\r\n        <entry key=\"..\\:/Users/User/Documents/Dev/BefitMobileApp/app/src/main/res/menu/bottom_navigation_menu.xml\" value=\"0.203125\" />\r\n      </map>\r\n    </option>\r\n  </component>\r\n  <component name=\"ExternalStorageConfigurationManager\" enabled=\"true\" />\r\n  <component name=\"ProjectRootManager\" version=\"2\" languageLevel=\"JDK_11\" default=\"true\" project-jdk-name=\"Android Studio default JDK\" project-jdk-type=\"JavaSDK\">\r\n    <output url=\"file://$PROJECT_DIR$/build/classes\" />\r\n  </component>\r\n  <component name=\"ProjectType\">\r\n    <option name=\"id\" value=\"Android\" />\r\n  </component>\r\n</project>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/.idea/misc.xml b/.idea/misc.xml
+--- a/.idea/misc.xml	(revision 7ce582d4b4f7464f0b879aaf9637e7ac38bc207d)
++++ b/.idea/misc.xml	(date 1681260272921)
+@@ -5,18 +5,22 @@
+       <map>
+         <entry key="..\:/Users/User/Documents/Dev/BefitMobileApp/app/src/main/res/drawable-v24/app_gradient.xml" value="0.1945" />
+         <entry key="..\:/Users/User/Documents/Dev/BefitMobileApp/app/src/main/res/drawable-v24/border_radius.xml" value="0.127" />
++        <entry key="..\:/Users/User/Documents/Dev/BefitMobileApp/app/src/main/res/drawable/app_gradient.xml" value="0.1" />
++        <entry key="..\:/Users/User/Documents/Dev/BefitMobileApp/app/src/main/res/drawable/app_gradient_dark.xml" value="0.1" />
++        <entry key="..\:/Users/User/Documents/Dev/BefitMobileApp/app/src/main/res/drawable/app_gradient_light.xml" value="0.13" />
+         <entry key="..\:/Users/User/Documents/Dev/BefitMobileApp/app/src/main/res/drawable/ic_dieta.xml" value="0.1" />
+         <entry key="..\:/Users/User/Documents/Dev/BefitMobileApp/app/src/main/res/drawable/ic_perfil.xml" value="0.1" />
+         <entry key="..\:/Users/User/Documents/Dev/BefitMobileApp/app/src/main/res/drawable/ic_treino.xml" value="0.1" />
+-        <entry key="..\:/Users/User/Documents/Dev/BefitMobileApp/app/src/main/res/layout/activity_home.xml" value="0.22" />
++        <entry key="..\:/Users/User/Documents/Dev/BefitMobileApp/app/src/main/res/layout/activity_home.xml" value="0.20253164556962025" />
+         <entry key="..\:/Users/User/Documents/Dev/BefitMobileApp/app/src/main/res/layout/activity_login.xml" value="0.20416666666666666" />
+-        <entry key="..\:/Users/User/Documents/Dev/BefitMobileApp/app/src/main/res/layout/activity_main.xml" value="0.20416666666666666" />
++        <entry key="..\:/Users/User/Documents/Dev/BefitMobileApp/app/src/main/res/layout/activity_main.xml" value="0.1" />
+         <entry key="..\:/Users/User/Documents/Dev/BefitMobileApp/app/src/main/res/layout/activity_map.xml" value="0.20416666666666666" />
+         <entry key="..\:/Users/User/Documents/Dev/BefitMobileApp/app/src/main/res/layout/activity_register.xml" value="0.20416666666666666" />
+         <entry key="..\:/Users/User/Documents/Dev/BefitMobileApp/app/src/main/res/layout/adicione_dieta.xml" value="0.20416666666666666" />
+         <entry key="..\:/Users/User/Documents/Dev/BefitMobileApp/app/src/main/res/layout/custom_marker_info.xml" value="0.20416666666666666" />
++        <entry key="..\:/Users/User/Documents/Dev/BefitMobileApp/app/src/main/res/layout/fragment_dieta.xml" value="0.1" />
+         <entry key="..\:/Users/User/Documents/Dev/BefitMobileApp/app/src/main/res/layout/fragment_perfil.xml" value="0.20416666666666666" />
+-        <entry key="..\:/Users/User/Documents/Dev/BefitMobileApp/app/src/main/res/layout/fragment_treino.xml" value="0.20416666666666666" />
++        <entry key="..\:/Users/User/Documents/Dev/BefitMobileApp/app/src/main/res/layout/fragment_treino.xml" value="0.1" />
+         <entry key="..\:/Users/User/Documents/Dev/BefitMobileApp/app/src/main/res/layout/item_catalogo.xml" value="0.20416666666666666" />
+         <entry key="..\:/Users/User/Documents/Dev/BefitMobileApp/app/src/main/res/layout/item_favorito.xml" value="0.20416666666666666" />
+         <entry key="..\:/Users/User/Documents/Dev/BefitMobileApp/app/src/main/res/menu/bottom_navigation_menu.xml" value="0.203125" />
+Index: app/src/main/java/com/example/befitapp/CatalogoTreinoAdapter.kt
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.example.befitapp\r\n\r\nimport android.view.LayoutInflater\r\nimport android.view.View\r\nimport android.view.ViewGroup\r\nimport android.widget.ImageButton\r\nimport android.widget.ImageView\r\nimport android.widget.TextView\r\nimport androidx.recyclerview.widget.RecyclerView\r\nimport com.example.befitapp.entity.Catalogo\r\nimport com.squareup.picasso.Picasso\r\n\r\nclass CatalogoAdapter(private val listaTreinos: List<Catalogo>) :\r\n    RecyclerView.Adapter<CatalogoAdapter.CatalogoViewHolder>() {\r\n\r\n    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CatalogoViewHolder {\r\n        val view = LayoutInflater.from(parent.context)\r\n            .inflate(R.layout.item_catalogo, parent, false)\r\n        return CatalogoViewHolder(view)\r\n    }\r\n\r\n    override fun onBindViewHolder(holder: CatalogoViewHolder, position: Int) {\r\n        val treino = listaTreinos[position]\r\n        holder.bindView(treino)\r\n    }\r\n\r\n    override fun getItemCount(): Int {\r\n        return listaTreinos.size\r\n    }\r\n\r\n    inner class CatalogoViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {\r\n        private val imagemTreino: ImageView = itemView.findViewById(R.id.imagem_catalogo)\r\n        private val nomeTreino: TextView = itemView.findViewById(R.id.nome_treino_catalogo)\r\n        private val descricaoTreino: TextView = itemView.findViewById(R.id.descricao_treino_catalogo)\r\n        private val likeButton: ImageButton = itemView.findViewById(R.id.like_treino_catalogo)\r\n\r\n        fun bindView(treino: Catalogo) {\r\n            Picasso.get().load(treino.imagem).into(imagemTreino)\r\n            nomeTreino.text = treino.nome\r\n            descricaoTreino.text = treino.descricao\r\n            likeButton.setImageResource(if (treino.favoritado) R.drawable.ic_like_vermelho else R.drawable.ic_like)\r\n            likeButton.setOnClickListener {\r\n                treino.favoritado = !treino.favoritado\r\n                likeButton.setImageResource(if (treino.favoritado) R.drawable.ic_like_vermelho else R.drawable.ic_like)\r\n            }\r\n        }\r\n    }\r\n}\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/java/com/example/befitapp/CatalogoTreinoAdapter.kt b/app/src/main/java/com/example/befitapp/CatalogoTreinoAdapter.kt
+--- a/app/src/main/java/com/example/befitapp/CatalogoTreinoAdapter.kt	(revision 7ce582d4b4f7464f0b879aaf9637e7ac38bc207d)
++++ b/app/src/main/java/com/example/befitapp/CatalogoTreinoAdapter.kt	(date 1681258327031)
+@@ -6,12 +6,20 @@
+ import android.widget.ImageButton
+ import android.widget.ImageView
+ import android.widget.TextView
++import android.widget.Toast
+ import androidx.recyclerview.widget.RecyclerView
+ import com.example.befitapp.entity.Catalogo
++import com.example.befitapp.service.BeFitApiService
++import com.google.gson.GsonBuilder
+ import com.squareup.picasso.Picasso
++import retrofit2.Call
++import retrofit2.Callback
++import retrofit2.Response
++import retrofit2.Retrofit
++import retrofit2.converter.gson.GsonConverterFactory
+ 
+-class CatalogoAdapter(private val listaTreinos: List<Catalogo>) :
+-    RecyclerView.Adapter<CatalogoAdapter.CatalogoViewHolder>() {
++class CatalogoTreinoAdapter(private val listaTreinos: List<Catalogo>) :
++    RecyclerView.Adapter<CatalogoTreinoAdapter.CatalogoViewHolder>() {
+ 
+     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CatalogoViewHolder {
+         val view = LayoutInflater.from(parent.context)
+@@ -30,9 +38,9 @@
+ 
+     inner class CatalogoViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+         private val imagemTreino: ImageView = itemView.findViewById(R.id.imagem_catalogo)
+-        private val nomeTreino: TextView = itemView.findViewById(R.id.nome_treino_catalogo)
+-        private val descricaoTreino: TextView = itemView.findViewById(R.id.descricao_treino_catalogo)
+-        private val likeButton: ImageButton = itemView.findViewById(R.id.like_treino_catalogo)
++        private val nomeTreino: TextView = itemView.findViewById(R.id.nome_catalogo)
++        private val descricaoTreino: TextView = itemView.findViewById(R.id.descricao_catalogo)
++        private val likeButton: ImageButton = itemView.findViewById(R.id.like_catalogo)
+ 
+         fun bindView(treino: Catalogo) {
+             Picasso.get().load(treino.imagem).into(imagemTreino)
+@@ -41,7 +49,29 @@
+             likeButton.setImageResource(if (treino.favoritado) R.drawable.ic_like_vermelho else R.drawable.ic_like)
+             likeButton.setOnClickListener {
+                 treino.favoritado = !treino.favoritado
+-                likeButton.setImageResource(if (treino.favoritado) R.drawable.ic_like_vermelho else R.drawable.ic_like)
++
++                val apiService = Retrofit.Builder()
++                    .baseUrl("http://10.0.2.2:8080/")
++                    .addConverterFactory(GsonConverterFactory.create(GsonBuilder().create()))
++                    .build()
++                    .create(BeFitApiService::class.java)
++
++                val call = if (treino.favoritado) {
++                    likeButton.setImageResource(R.drawable.ic_like_vermelho)
++                    apiService.favoritar("5bb7a32c-20ff-42d2-b684-33bf61f6eb13", treino.id)
++                } else {
++                    likeButton.setImageResource(R.drawable.ic_like)
++                    apiService.desfavoritar("5bb7a32c-20ff-42d2-b684-33bf61f6eb13", treino.id)
++                }
++
++                call.enqueue(object : Callback<String> {
++                    override fun onResponse(call: Call<String>, response: Response<String>) {
++                    }
++
++                    override fun onFailure(call: Call<String>, t: Throwable) {
++                    }
++                })
++
+             }
+         }
+     }
+Index: app/src/main/java/com/example/befitapp/service/MapApiService.kt
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.example.befitapp.entity\r\n\r\nimport retrofit2.http.GET\r\nimport retrofit2.http.Query\r\n\r\ninterface ApiService {\r\n    @GET(\"json\")\r\n    suspend fun getGyms(\r\n        @Query(\"location\") location: String,\r\n        @Query(\"radius\") radius: Int? = 2000,\r\n        @Query(\"tyoes\") types: String? = \"gym\",\r\n        @Query(\"key\") key: String? = \"AIzaSyAghQgS67kmlLDvmOBAlyf7UDEjEmH_0R8\"\r\n    ): PlaceResponse\r\n}
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/java/com/example/befitapp/service/MapApiService.kt b/app/src/main/java/com/example/befitapp/service/MapApiService.kt
+--- a/app/src/main/java/com/example/befitapp/service/MapApiService.kt	(revision 7ce582d4b4f7464f0b879aaf9637e7ac38bc207d)
++++ b/app/src/main/java/com/example/befitapp/service/MapApiService.kt	(date 1681258327103)
+@@ -1,14 +1,15 @@
+-package com.example.befitapp.entity
++package com.example.befitapp.service
+ 
++import com.example.befitapp.entity.PlaceResponse
+ import retrofit2.http.GET
+ import retrofit2.http.Query
+ 
+-interface ApiService {
++interface MapApiService {
+     @GET("json")
+     suspend fun getGyms(
+         @Query("location") location: String,
+         @Query("radius") radius: Int? = 2000,
+-        @Query("tyoes") types: String? = "gym",
++        @Query("types") types: String? = "gym",
+         @Query("key") key: String? = "AIzaSyAghQgS67kmlLDvmOBAlyf7UDEjEmH_0R8"
+     ): PlaceResponse
+ }
+\ No newline at end of file
