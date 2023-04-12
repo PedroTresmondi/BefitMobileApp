@@ -26,9 +26,9 @@ public class ThemeUtils {
     private static int getBackgroundDrawableId(Context context) {
         int theme = getTheme(context);
         if (theme == THEME_LIGHT) {
-            return R.drawable.gradientlight;
+            return R.drawable.app_gradient;
         } else {
-            return R.drawable.gradientdark;
+            return R.drawable.app_gradient_dark;
         }
     }
 

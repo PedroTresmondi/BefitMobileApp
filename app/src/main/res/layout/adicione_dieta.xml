@@ -26,7 +26,10 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:text="ADICIONE UMA NOVA DIETA"
-            android:textSize="23sp" />
+            android:textSize="23sp"
+            style="@style/nome_item"
+
+            />
 
 
         <View

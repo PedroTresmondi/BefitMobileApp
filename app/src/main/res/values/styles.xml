@@ -8,11 +8,13 @@
 
 
     <style name="AppTheme.Light" parent="Theme.AppCompat.Light.NoActionBar">
-        <item name="android:windowBackground">@drawable/gradientlight</item>
+        <item name="android:windowBackground">@drawable/app_gradient</item>
     </style>
 
     <style name="AppTheme.Dark" parent="Theme.AppCompat.NoActionBar">
-        <item name="android:windowBackground">@drawable/gradientdark</item>
+        <item name="android:windowBackground">@drawable/app_gradient_dark</item>
     </style>
+
+
 
 </resources>
