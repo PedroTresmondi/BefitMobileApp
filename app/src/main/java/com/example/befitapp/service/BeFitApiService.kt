@@ -24,7 +24,7 @@ interface BeFitApiService {
     fun adicionarUsuario(@Body usuario: Usuario): Call<Usuario>
 
 
-    @PATCH("/login/{email}/{senha}")
+    @PATCH("usuarios/login/{email}/{senha}")
     fun loginUsuario(@Path("email") email: String, @Path("senha") senha: String): Call<Login>
 
     companion object{

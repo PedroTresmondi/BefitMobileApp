@@ -60,9 +60,9 @@ class LoginActivity : AppCompatActivity() {
                             val emailApi = login?.email ?: ""
                             val senhaApi = login?.senha ?: ""
                             if (emailUser == emailApi && senhaUser == senhaApi) {
-                                Toast.makeText(applicationContext, "Usuário autenticado com sucesso", Toast.LENGTH_SHORT).show()
                                 val intent = Intent(this@LoginActivity, HomeActivity::class.java)
                                 startActivity(intent)
+                                Toast.makeText(applicationContext, "Usuário autenticado com sucesso", Toast.LENGTH_SHORT).show()
                             } else {
                                 Toast.makeText(applicationContext, "Email ou senha incorretos", Toast.LENGTH_SHORT).show()
                             }
