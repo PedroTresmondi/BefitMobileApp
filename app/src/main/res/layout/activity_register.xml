@@ -51,7 +51,7 @@
     </LinearLayout>
 
     <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/btn_login"
+        android:id="@+id/btn_confirm"
         style="@style/loginButton"
         android:layout_width="370dp"
         android:layout_height="45dp"
@@ -59,10 +59,8 @@
         android:text="@string/btn_confirmar"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.487"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/layout_input"
-        app:layout_constraintVertical_bias="0.232" />
+        app:layout_constraintTop_toBottomOf="@+id/layout_input" />
 
     <TextView
         android:id="@+id/login_sub_title"
