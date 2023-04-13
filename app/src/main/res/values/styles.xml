@@ -4,4 +4,17 @@
     <style name="welcome_subtext">entre se ja tiver uma conta</style>
 
     <style name="welcome_subtext_splash">entre se ja possuir uma conta</style>
+
+
+
+    <style name="AppTheme.Light" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="android:windowBackground">@drawable/app_gradient</item>
+    </style>
+
+    <style name="AppTheme.Dark" parent="Theme.AppCompat.NoActionBar">
+        <item name="android:windowBackground">@drawable/app_gradient_dark</item>
+    </style>
+
+
+
 </resources>
