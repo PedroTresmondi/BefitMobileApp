@@ -2,6 +2,7 @@ package com.example.befitapp
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.widget.Button
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -18,6 +19,7 @@ class LoginActivity : AppCompatActivity() {
     private lateinit var passwordTextInputLayout: TextInputLayout
     private lateinit var loginButton: Button
     private lateinit var binding: ActivityLoginBinding
+    private var emailApi: String = ""
 
     private val api = BeFitApiService.getInstance()
 
@@ -36,6 +38,7 @@ class LoginActivity : AppCompatActivity() {
         loginButton.setOnClickListener {
             val emailUser = emailTextInputLayout.editText?.text.toString()
             val senhaUser = passwordTextInputLayout.editText?.text.toString()
+
             fun isValidEmail(email: String): Boolean {
                 val emailPattern = "[a-zA-Z0-9._-]+@[a-z]+[a-z]+\\.com"
                 return email.matches(emailPattern.toRegex())
@@ -52,36 +55,42 @@ class LoginActivity : AppCompatActivity() {
                 emailTextInputLayout.error = "Por favor, insira um e-mail válido."
                 Toast.makeText(this, "Email inválido.", Toast.LENGTH_SHORT).show()
             } else {
+                val intent = Intent(this@LoginActivity, HomeActivity::class.java)
                 val call = api.loginUsuario(emailUser, senhaUser)
                 call.enqueue(object: Callback<Login> {
                     override fun onResponse(call: Call<Login>, response: Response<Login>) {
-                        if (response.isSuccessful) {
-                            val login = response.body()
-                            val emailApi = login?.email ?: ""
-                            val senhaApi = login?.senha ?: ""
-                            if (emailUser == emailApi && senhaUser == senhaApi) {
-                                val intent = Intent(this@LoginActivity, HomeActivity::class.java)
-                                startActivity(intent)
-                                Toast.makeText(applicationContext, "Usuário autenticado com sucesso", Toast.LENGTH_SHORT).show()
+                        try {
+                            if (response.isSuccessful) {
+                                println("chegou resposta")
+                                println(response)
+                                val login = response.body()
+                                emailApi = login?.email ?: ""
+                                println("email" + emailApi)
+                                if (response.code() == 200 && emailUser == emailApi) {
+                                    println("autenticou")
+                                    startActivity(intent)
+                                    Toast.makeText(applicationContext, "Usuário autenticado com sucesso", Toast.LENGTH_SHORT).show()
+                                } else {
+                                    println("Email ou senha incorretos")
+                                    Toast.makeText(applicationContext, "Email ou senha incorretos", Toast.LENGTH_SHORT).show()
+                                }
                             } else {
-                                Toast.makeText(applicationContext, "Email ou senha incorretos", Toast.LENGTH_SHORT).show()
+                                println("Erro na resposta da API")
+
+                                throw Exception("Erro na resposta da API")
                             }
+                        } catch (e: Exception) {
+                            println("caiu na exception")
+                            Toast.makeText(applicationContext, "Erro ao processar a resposta da API", Toast.LENGTH_SHORT).show()
+                            Log.e("LoginActivity", "Erro ao processar a resposta da API", e)
                         }
                     }
                     override fun onFailure(call: Call<Login>, t: Throwable) {
                         Toast.makeText(applicationContext, "Erro ao conectar com a API", Toast.LENGTH_SHORT).show()
                     }
                 })
+
             }
         }
-
-
     }
-
-
-
-
-
-
-
 }
