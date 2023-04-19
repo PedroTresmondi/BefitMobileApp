@@ -1,8 +1,8 @@
 package com.example.befitapp
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.TextView
+import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
 class HomeActivity : AppCompatActivity() {
@@ -15,7 +15,7 @@ class HomeActivity : AppCompatActivity() {
         topTextView.text = "Perfil"
 
         supportFragmentManager.beginTransaction()
-            .add(R.id.fragment_container, PerfilFragment())
+            .replace(R.id.fragment_container, PerfilFragment())
             .commit()
 
         bottomNavigationView.setOnItemSelectedListener { menuItem ->
@@ -23,7 +23,7 @@ class HomeActivity : AppCompatActivity() {
                 R.id.menu_training -> {
                     val fragment = TreinoFragment()
                     supportFragmentManager.beginTransaction()
-                        .add(R.id.fragment_container, fragment)
+                        .replace(R.id.fragment_container, fragment)
                         .commit()
                     topTextView.text = "Treinos"
                     true
@@ -31,7 +31,7 @@ class HomeActivity : AppCompatActivity() {
                 R.id.menu_profile -> {
                     val fragment = PerfilFragment()
                     supportFragmentManager.beginTransaction()
-                        .add(R.id.fragment_container, fragment)
+                        .replace(R.id.fragment_container, fragment)
                         .commit()
                     topTextView.text = "Perfil"
                     true
@@ -39,7 +39,7 @@ class HomeActivity : AppCompatActivity() {
                 R.id.menu_diet -> {
                     val fragment = DietaFragment()
                     supportFragmentManager.beginTransaction()
-                        .add(R.id.fragment_container, fragment)
+                        .replace(R.id.fragment_container, fragment)
                         .commit()
                     topTextView.text = "Dietas"
                     true

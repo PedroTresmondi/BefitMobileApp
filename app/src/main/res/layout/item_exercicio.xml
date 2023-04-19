@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="60dp">
+    <LinearLayout
+        android:id="@+id/item_exercicio"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:orientation="vertical"
+        android:paddingHorizontal="10dp"
+        tools:ignore="MissingConstraints"
+        android:clickable="true"
+        android:focusable="true"
+        android:background="@color/white">
+
+        <TextView
+            android:id="@+id/tv_exercicio_nome"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Exercicio 1"
+            android:textSize="20dp"
+            android:textColor="@color/black" />
+
+        <TextView
+            android:id="@+id/tv_exercicio_repeticoes"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="repetições 15"
+            android:textSize="20dp"
+            android:textColor="@color/black" />
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
