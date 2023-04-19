@@ -5,9 +5,11 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageButton
 import android.widget.ImageView
+import android.widget.LinearLayout
 import android.widget.TextView
 import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
+import com.example.befitapp.entity.BefitApi
 import com.example.befitapp.entity.Catalogo
 import com.example.befitapp.service.BeFitApiService
 import com.google.gson.GsonBuilder
@@ -41,8 +43,24 @@ class CatalogoTreinoAdapter(private val listaTreinos: List<Catalogo>) :
         private val nomeTreino: TextView = itemView.findViewById(R.id.nome_catalogo)
         private val descricaoTreino: TextView = itemView.findViewById(R.id.descricao_catalogo)
         private val likeButton: ImageButton = itemView.findViewById(R.id.like_catalogo)
+        private val itemTreino: LinearLayout = itemView.findViewById(R.id.item)
 
         fun bindView(treino: Catalogo) {
+            itemTreino.setOnClickListener{
+                it.animate()
+                    .scaleX(0.9f)
+                    .scaleY(0.9f)
+                    .setDuration(100)
+                    .withEndAction {
+                        it.animate()
+                            .scaleX(1f)
+                            .scaleY(1f)
+                            .setDuration(100)
+                            .start()
+                    }
+                    .start()
+            }
+
             Picasso.get().load(treino.imagem).into(imagemTreino)
             nomeTreino.text = treino.nome
             descricaoTreino.text = treino.descricao
@@ -50,11 +68,7 @@ class CatalogoTreinoAdapter(private val listaTreinos: List<Catalogo>) :
             likeButton.setOnClickListener {
                 treino.favoritado = !treino.favoritado
 
-                val apiService = Retrofit.Builder()
-                    .baseUrl("http://10.0.2.2:8080/")
-                    .addConverterFactory(GsonConverterFactory.create(GsonBuilder().create()))
-                    .build()
-                    .create(BeFitApiService::class.java)
+                val apiService = BefitApi.http()
 
                 val call = if (treino.favoritado) {
                     likeButton.setImageResource(R.drawable.ic_like_vermelho)

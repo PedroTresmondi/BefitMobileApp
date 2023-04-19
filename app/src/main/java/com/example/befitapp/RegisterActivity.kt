@@ -7,6 +7,7 @@ import android.widget.Button
 import android.widget.Toast
 
 import com.example.befitapp.databinding.ActivityRegisterBinding
+import com.example.befitapp.entity.BefitApi
 import com.example.befitapp.entity.Usuario
 import com.example.befitapp.service.BeFitApiService
 import com.google.android.material.textfield.TextInputLayout
@@ -24,7 +25,6 @@ class RegisterActivity : AppCompatActivity() {
     private lateinit var confirmPasswordTextInputLayout: TextInputLayout
     private lateinit var registerButton: Button
     private lateinit var binding: ActivityRegisterBinding
-    private val api = BeFitApiService.getInstance()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -75,7 +75,7 @@ class RegisterActivity : AppCompatActivity() {
                 emailTextInputLayout.error = "Por favor, insira um e-mail válido."
                 Toast.makeText(this, "Email inválido.", Toast.LENGTH_SHORT).show()
             } else {
-                val call = api.adicionarUsuario(Usuario(user, email, password))
+                val call = BefitApi.http().adicionarUsuario(Usuario(user, email, password))
                 call.enqueue(object: Callback<Usuario> {
                     override fun onResponse(call: Call<Usuario>, response: Response<Usuario>) {
                         if (response.isSuccessful) {

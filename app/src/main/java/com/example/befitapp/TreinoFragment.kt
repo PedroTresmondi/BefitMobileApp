@@ -8,6 +8,7 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.befitapp.entity.BefitApi
 import com.example.befitapp.entity.Catalogo
 import com.example.befitapp.service.BeFitApiService
 import com.google.gson.GsonBuilder
@@ -31,12 +32,7 @@ class TreinoFragment : Fragment() {
         recyclerView.layoutManager = LinearLayoutManager(context)
         recyclerView.adapter = CatalogoTreinoAdapter(emptyList())
 
-        val call = Retrofit.Builder()
-            .baseUrl("http://10.0.2.2:8080/")
-            .addConverterFactory(GsonConverterFactory.create(GsonBuilder().create()))
-            .build().let {
-                it.create(BeFitApiService::class.java).getTreinos(GLOBAL_PERSONID_NAME)
-            }
+        val call = BefitApi.http().getTreinos(GLOBAL_PERSONID_NAME)
 
         call.enqueue(object : Callback<List<Catalogo>> {
             override fun onResponse(call: Call<List<Catalogo>>, response: Response<List<Catalogo>>) {

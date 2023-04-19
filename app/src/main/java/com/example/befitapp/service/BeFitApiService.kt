@@ -23,21 +23,6 @@ interface BeFitApiService {
     @POST("/usuarios")
     fun adicionarUsuario(@Body usuario: Usuario): Call<Usuario>
 
-
     @PATCH("usuarios/login/{email}/{senha}")
     fun loginUsuario(@Path("email") email: String, @Path("senha") senha: String): Call<Login>
-
-    companion object{
-        private var beFitApiRepository : BeFitApiService? = null
-        fun getInstance(): BeFitApiService {
-        if (beFitApiRepository == null) {
-            beFitApiRepository = Retrofit.Builder()
-                .baseUrl("http://10.0.2.2:8080/")
-                .addConverterFactory(GsonConverterFactory.create())
-               .build()
-                .create(BeFitApiService::class.java)
-       }
-       return beFitApiRepository!!
-    }
-}
 }
