@@ -1,11 +1,13 @@
 package com.example.befitapp
 
 import android.Manifest
+import android.content.Context.MODE_PRIVATE
 import android.content.pm.PackageManager
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
@@ -32,6 +34,8 @@ class PerfilFragment : Fragment(), OnMapReadyCallback {
     private lateinit var mapView: MapView
     private lateinit var googleMap: GoogleMap
 
+
+
     private val listaTreinos = listOf(
         "Treino A",
         "Treino B",
@@ -50,10 +54,14 @@ class PerfilFragment : Fragment(), OnMapReadyCallback {
         savedInstanceState: Bundle?
     ): View? {
         val view = inflater.inflate(R.layout.fragment_perfil, container, false)
-
         val recyclerViewTreinos: RecyclerView = view.findViewById(R.id.recycler_view_treinos)
+        val username : TextView = view.findViewById(R.id.nome_usuario)
+
+        username.text = "mudar aqui"
         recyclerViewTreinos.layoutManager = LinearLayoutManager(requireContext())
         recyclerViewTreinos.adapter = FavoritoAdapter(listaTreinos, "treino")
+
+
 
         val recyclerViewDietas: RecyclerView = view.findViewById(R.id.recycler_view_dietas)
         recyclerViewDietas.layoutManager = LinearLayoutManager(requireContext())

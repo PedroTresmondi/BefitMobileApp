@@ -13,7 +13,6 @@ class HomeActivity : AppCompatActivity() {
         val bottomNavigationView = findViewById<BottomNavigationView>(R.id.bottom_navigation)
         var topTextView = findViewById<TextView>(R.id.top_navigation)
         topTextView.text = "Perfil"
-
         supportFragmentManager.beginTransaction()
             .add(R.id.fragment_container, PerfilFragment())
             .commit()
