@@ -1,6 +1,7 @@
 package com.example.befitapp
 
 import android.content.Intent
+import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -58,6 +59,9 @@ class CatalogoTreinoAdapter(private val listaTreinos: List<Catalogo>) :
                     .start()
 
                 val fragment = ExercicioFragment()
+                val bundle = Bundle()
+                bundle.putInt("treino_id", treino.id)
+                fragment.arguments = bundle
                 val transaction = (itemView.context as AppCompatActivity).supportFragmentManager.beginTransaction()
                 transaction.replace(R.id.fragment_container, fragment)
                 transaction.addToBackStack(null)

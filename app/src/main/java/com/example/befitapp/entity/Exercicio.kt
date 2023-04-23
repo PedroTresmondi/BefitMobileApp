@@ -1,7 +1,5 @@
 package com.example.befitapp.entity
 
-import java.time.LocalTime
-
 data class Exercicio(
     val idExercicio: Int,
     val nome: String,
