@@ -12,6 +12,8 @@ import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.befitapp.entity.BefitApi
+import com.example.befitapp.entity.Catalogo
 import com.example.befitapp.service.MapApiService
 import com.google.android.gms.common.util.CollectionUtils.listOf
 import com.google.android.gms.location.LocationServices
@@ -25,6 +27,9 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
@@ -33,34 +38,64 @@ class PerfilFragment : Fragment(), OnMapReadyCallback {
     private lateinit var mapView: MapView
     private lateinit var googleMap: GoogleMap
 
-    private val listaTreinos = listOf(
-        "Treino A",
-        "Treino B",
-        "Treino C"
-    )
-
-    private val listaDietas = listOf(
-        "Dieta A",
-        "Dieta B",
-        "Dieta C"
-    )
-
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         val view = inflater.inflate(R.layout.fragment_perfil, container, false)
+        val personId = arguments?.getString("personId")
+        val treinoCall = personId?.let { BefitApi.http().getTreinoFavoritos(it) }
+
+        treinoCall!!.enqueue(object : Callback<List<Catalogo>> {
+            override fun onResponse(
+                call: Call<List<Catalogo>>,
+                response: Response<List<Catalogo>>
+            ) {
+                if (response.isSuccessful) {
+                    response.body()?.let {
+                        val recyclerViewTreinos: RecyclerView = view.findViewById(R.id.recycler_view_treinos)
+                        recyclerViewTreinos.layoutManager = LinearLayoutManager(requireContext())
+                        recyclerViewTreinos.adapter = FavoritoAdapter(it, "treino")
+                    }
+                }
+            }
+
+            override fun onFailure(call: Call<List<Catalogo>>, t: Throwable) {
+                Toast.makeText(context, "Network Error", Toast.LENGTH_SHORT).show()
+            }
+
+        })
+
+
         view.findViewById<TextView>(R.id.nome).let {
             it.text = "Bem vindo! ${arguments?.getString("nome")}"
         }
-        val recyclerViewTreinos: RecyclerView = view.findViewById(R.id.recycler_view_treinos)
-        recyclerViewTreinos.layoutManager = LinearLayoutManager(requireContext())
-        recyclerViewTreinos.adapter = FavoritoAdapter(listaTreinos, "treino")
 
-        val recyclerViewDietas: RecyclerView = view.findViewById(R.id.recycler_view_dietas)
-        recyclerViewDietas.layoutManager = LinearLayoutManager(requireContext())
-        recyclerViewDietas.adapter = FavoritoAdapter(listaDietas, "dieta")
+
+        val dietaCall = personId?.let { BefitApi.http().getDietaFavoritos(it) }
+
+        dietaCall!!.enqueue(object : Callback<List<Catalogo>> {
+            override fun onResponse(
+                call: Call<List<Catalogo>>,
+                response: Response<List<Catalogo>>
+            ) {
+                if (response.isSuccessful) {
+                    response.body()?.let {
+                        val recyclerViewDietas: RecyclerView = view.findViewById(R.id.recycler_view_dietas)
+                        recyclerViewDietas.layoutManager = LinearLayoutManager(requireContext())
+                        recyclerViewDietas.adapter = FavoritoAdapter(it, "dieta")
+                    }
+                }
+            }
+
+            override fun onFailure(call: Call<List<Catalogo>>, t: Throwable) {
+                Toast.makeText(context, "Network Error", Toast.LENGTH_SHORT).show()
+            }
+
+        })
+
+
 
         mapView = view.findViewById(R.id.mapView)
         mapView.onCreate(savedInstanceState)
@@ -177,7 +212,6 @@ class PerfilFragment : Fragment(), OnMapReadyCallback {
             }
         }
     }
-
 
     companion object {
         private const val REQUEST_LOCATION_PERMISSION = 1

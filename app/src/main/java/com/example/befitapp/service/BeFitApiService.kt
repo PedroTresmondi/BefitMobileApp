@@ -27,4 +27,10 @@ interface BeFitApiService {
 
     @GET("/treinos/{id}")
     fun getTreino(@Path("id") id: Int): Call<List<Exercicio>>
+
+    @GET("/treinos/favoritos/{personId}")
+    fun getTreinoFavoritos(@Path("personId") personId: String): Call<List<Catalogo>>
+
+    @GET("/dietas/favoritos/{personId}")
+    fun getDietaFavoritos(@Path("personId") personId: String): Call<List<Catalogo>>
 }

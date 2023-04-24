@@ -9,6 +9,7 @@ object BefitApi {
         val retrofit =
             Retrofit.Builder().addConverterFactory(GsonConverterFactory.create()).baseUrl(
                 "http://10.0.2.2:8080/"
+                //"http://34.232.149.218:8080/"
             ).build()
         return retrofit.create(BeFitApiService::class.java)
     }
