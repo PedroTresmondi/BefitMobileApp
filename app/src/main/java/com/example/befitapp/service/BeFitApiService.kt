@@ -13,6 +13,10 @@ interface BeFitApiService {
     @GET("/treinos/catalogo/{personId}")
     fun getTreinos(@Path("personId") personId: String): Call<List<Catalogo>>
 
+    @GET("/dietas/catalogo/{personId}")
+    fun getDietas(@Path("personId") personId: String): Call<List<Catalogo>>
+
+
     @POST("/treinos/favoritar/{personId}/{treinoId}")
     fun favoritar(@Path("personId") personId: String, @Path("treinoId") treinoId: Int): Call<String>
 
@@ -33,4 +37,11 @@ interface BeFitApiService {
 
     @GET("/dietas/favoritos/{personId}")
     fun getDietaFavoritos(@Path("personId") personId: String): Call<List<Catalogo>>
+
+    @POST("/dietas/favoritar/{personId}/{dietaId}")
+    fun favoritarDieta(@Path("personId") personId: String, @Path("dietaId") dietaId: Int): Call<String>
+
+    @DELETE("/dietas/desfavoritar/{personId}/{dietaId}")
+    fun desfavoritarDieta(@Path("personId") personId: String, @Path("dietaId") dietaId: Int): Call<String>
+
 }

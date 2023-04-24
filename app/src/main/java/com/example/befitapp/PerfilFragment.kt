@@ -58,6 +58,11 @@ class PerfilFragment : Fragment(), OnMapReadyCallback {
                         recyclerViewTreinos.layoutManager = LinearLayoutManager(requireContext())
                         recyclerViewTreinos.adapter = FavoritoAdapter(it, "treino")
                     }
+                    response.body()?.let {
+                        val recyclerViewTreinos: RecyclerView = view.findViewById(R.id.recycler_view_dietas)
+                        recyclerViewTreinos.layoutManager = LinearLayoutManager(requireContext())
+                        recyclerViewTreinos.adapter = FavoritoAdapter(it, "dieta")
+                    }
                 }
             }
 
