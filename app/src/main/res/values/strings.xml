@@ -29,7 +29,7 @@
     <string name="google_maps_key">AIzaSyC9OBoZmZKvEq_A2usOPCi68Shx3AFKUDc</string>
     <string name="hello_blank_fragment">blank fragment</string>
     <string name="like_buttom">like_buttom</string>
-    <string name="nome_usuario">Pedro Tresmondi</string>
+    <string name="nome_usuario">Default Usuario</string>
     <string name="academias_proximas">Academias próximas:</string>
 
 </resources>

@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
@@ -50,7 +51,9 @@ class PerfilFragment : Fragment(), OnMapReadyCallback {
         savedInstanceState: Bundle?
     ): View? {
         val view = inflater.inflate(R.layout.fragment_perfil, container, false)
-
+        view.findViewById<TextView>(R.id.nome).let {
+            it.text = "Bem vindo! ${arguments?.getString("nome")}"
+        }
         val recyclerViewTreinos: RecyclerView = view.findViewById(R.id.recycler_view_treinos)
         recyclerViewTreinos.layoutManager = LinearLayoutManager(requireContext())
         recyclerViewTreinos.adapter = FavoritoAdapter(listaTreinos, "treino")

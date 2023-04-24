@@ -2,14 +2,12 @@ package com.example.befitapp
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.widget.Button
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.befitapp.databinding.ActivityLoginBinding
 import com.example.befitapp.entity.BefitApi
-import com.example.befitapp.entity.Login
-import com.example.befitapp.service.BeFitApiService
+import com.example.befitapp.entity.LoginResponse
 import com.google.android.material.textfield.TextInputLayout
 import retrofit2.Call
 import retrofit2.Callback
@@ -55,36 +53,47 @@ class LoginActivity : AppCompatActivity() {
             } else {
                 val intent = Intent(this@LoginActivity, HomeActivity::class.java)
                 val call = BefitApi.http().loginUsuario(emailUser, senhaUser)
-                call.enqueue(object: Callback<Login> {
-                    override fun onResponse(call: Call<Login>, response: Response<Login>) {
+                call.enqueue(object : Callback<LoginResponse> {
+                    override fun onResponse(
+                        call: Call<LoginResponse>,
+                        response: Response<LoginResponse>
+                    ) {
                         try {
                             if (response.isSuccessful) {
-                                println("chegou resposta")
-                                println(response)
-                                val login = response.body()
-                                emailApi = login?.email ?: ""
-                                println("email" + emailApi)
-                                if (response.code() == 200 && emailUser == emailApi) {
-                                    println("autenticou")
+                                response.body()?.let {
+                                    intent.putExtra("nome", it.nome)
+                                    intent.putExtra("personId", it.personId)
                                     startActivity(intent)
-                                    Toast.makeText(applicationContext, "Usuário autenticado com sucesso", Toast.LENGTH_SHORT).show()
-                                } else {
-                                    println("Email ou senha incorretos")
-                                    Toast.makeText(applicationContext, "Email ou senha incorretos", Toast.LENGTH_SHORT).show()
-                                }
-                            } else {
-                                println("Erro na resposta da API")
+                                    Toast.makeText(
+                                        applicationContext,
+                                        "Usuário autenticado com sucesso",
+                                        Toast.LENGTH_SHORT
+                                    ).show()
+                                } ?: throw Exception()
 
-                                throw Exception("Erro na resposta da API")
+                            } else {
+                                println("Email ou senha incorretos")
+                                Toast.makeText(
+                                    applicationContext,
+                                    "Email ou senha incorretos",
+                                    Toast.LENGTH_SHORT
+                                ).show()
                             }
                         } catch (e: Exception) {
-                            println("caiu na exception")
-                            Toast.makeText(applicationContext, "Erro ao processar a resposta da API", Toast.LENGTH_SHORT).show()
-                            Log.e("LoginActivity", "Erro ao processar a resposta da API", e)
+                            Toast.makeText(
+                                applicationContext,
+                                "Erro ao processar a resposta da API",
+                                Toast.LENGTH_SHORT
+                            ).show()
                         }
                     }
-                    override fun onFailure(call: Call<Login>, t: Throwable) {
-                        Toast.makeText(applicationContext, "Erro ao conectar com a API", Toast.LENGTH_SHORT).show()
+
+                    override fun onFailure(call: Call<LoginResponse>, t: Throwable) {
+                        Toast.makeText(
+                            applicationContext,
+                            "Erro ao conectar com a API",
+                            Toast.LENGTH_SHORT
+                        ).show()
                     }
                 })
 

@@ -1,6 +1,5 @@
 package com.example.befitapp
 
-import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -18,7 +17,7 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class CatalogoTreinoAdapter(private val listaTreinos: List<Catalogo>) :
+class CatalogoTreinoAdapter(private val listaTreinos: List<Catalogo>, private val personId: String) :
     RecyclerView.Adapter<CatalogoTreinoAdapter.CatalogoViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CatalogoViewHolder {
@@ -79,10 +78,10 @@ class CatalogoTreinoAdapter(private val listaTreinos: List<Catalogo>) :
 
                 val call = if (treino.favoritado) {
                     likeButton.setImageResource(R.drawable.ic_like_vermelho)
-                    apiService.favoritar("5bb7a32c-20ff-42d2-b684-33bf61f6eb13", treino.id)
+                    apiService.favoritar(personId, treino.id)
                 } else {
                     likeButton.setImageResource(R.drawable.ic_like)
-                    apiService.desfavoritar("5bb7a32c-20ff-42d2-b684-33bf61f6eb13", treino.id)
+                    apiService.desfavoritar(personId, treino.id)
                 }
 
                 call.enqueue(object : Callback<String> {

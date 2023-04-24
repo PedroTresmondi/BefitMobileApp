@@ -14,14 +14,22 @@ class HomeActivity : AppCompatActivity() {
         var topTextView = findViewById<TextView>(R.id.top_navigation)
         topTextView.text = "Perfil"
 
+        val defaultFragment = PerfilFragment()
+        val bundle = Bundle()
+        bundle.putString("nome", intent.getStringExtra("nome"))
+        bundle.putString("personId", intent.getStringExtra("personId"))
+        defaultFragment.arguments = bundle
         supportFragmentManager.beginTransaction()
-            .replace(R.id.fragment_container, PerfilFragment())
+            .replace(R.id.fragment_container, defaultFragment)
             .commit()
 
         bottomNavigationView.setOnItemSelectedListener { menuItem ->
             when (menuItem.itemId) {
                 R.id.menu_training -> {
                     val fragment = TreinoFragment()
+                    val bundle = Bundle()
+                    bundle.putString("personId", intent.getStringExtra("personId"))
+                    fragment.arguments = bundle
                     supportFragmentManager.beginTransaction()
                         .replace(R.id.fragment_container, fragment)
                         .commit()
@@ -30,6 +38,10 @@ class HomeActivity : AppCompatActivity() {
                 }
                 R.id.menu_profile -> {
                     val fragment = PerfilFragment()
+                    val bundle = Bundle()
+                    bundle.putString("nome", intent.getStringExtra("nome"))
+                    bundle.putString("personId", intent.getStringExtra("personId"))
+                    fragment.arguments = bundle
                     supportFragmentManager.beginTransaction()
                         .replace(R.id.fragment_container, fragment)
                         .commit()
@@ -38,6 +50,9 @@ class HomeActivity : AppCompatActivity() {
                 }
                 R.id.menu_diet -> {
                     val fragment = DietaFragment()
+                    val bundle = Bundle()
+                    bundle.putString("personId", intent.getStringExtra("personId"))
+                    fragment.arguments = bundle
                     supportFragmentManager.beginTransaction()
                         .replace(R.id.fragment_container, fragment)
                         .commit()

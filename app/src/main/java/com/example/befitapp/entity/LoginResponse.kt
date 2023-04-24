@@ -1,6 +1,10 @@
 package com.example.befitapp.entity
 
-data class Login(
+data class LoginResponse(
+    val id: Int,
+    val nome: String,
     val email: String,
-    val senha: String
+    val personId: String,
+    val xp: Int,
+    val logado: Boolean
 )
