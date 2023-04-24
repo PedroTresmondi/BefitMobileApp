@@ -38,7 +38,7 @@ class ExercicioFragment : Fragment() {
             ) {
                 if (response.isSuccessful) {
                     response.body()?.let {
-                        recyclerView.adapter = ExercicioItemAdapter(it, fragmentExercicio)
+                        recyclerView.adapter = ExercicioItemAdapter(it, fragmentExercicio, context)
 
                         fragmentExercicio.findViewById<TextView>(R.id.tv_exercicio_nome_titulo).text =
                             it[0].nome.uppercase()
@@ -59,6 +59,13 @@ class ExercicioFragment : Fragment() {
                 Toast.makeText(context, "Network Error", Toast.LENGTH_SHORT).show()
             }
         })
+
+        fragmentExercicio.findViewById<ImageView>(R.id.iv_voltar_exercicio).let {
+            it.setOnClickListener {
+                parentFragmentManager.popBackStack()
+            }
+        }
+
 
         return fragmentExercicio
     }

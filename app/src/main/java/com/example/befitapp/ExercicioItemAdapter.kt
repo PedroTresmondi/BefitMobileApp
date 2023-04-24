@@ -1,5 +1,9 @@
 package com.example.befitapp
 
+import android.app.AlertDialog
+import android.content.Context
+import android.content.DialogInterface
+import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -10,8 +14,14 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.befitapp.entity.Exercicio
 import com.squareup.picasso.Picasso
 
-class ExercicioItemAdapter(private val listaExercicio: List<Exercicio>, private val exercicioView: View) :
+class ExercicioItemAdapter(
+    private val listaExercicio: List<Exercicio>,
+    private val exercicioView: View,
+    private val context: Context?
+) :
     RecyclerView.Adapter<ExercicioItemAdapter.ExercicioViewHolder>() {
+
+    private var currentExercicioIndex = 0
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ExercicioViewHolder {
         val view = LayoutInflater.from(parent.context)
@@ -21,7 +31,7 @@ class ExercicioItemAdapter(private val listaExercicio: List<Exercicio>, private 
 
     override fun onBindViewHolder(holder: ExercicioViewHolder, position: Int) {
         val exercicio = listaExercicio[position]
-        holder.bindView(exercicio)
+        holder.bindView(exercicio, listaExercicio)
     }
 
     override fun getItemCount(): Int {
@@ -30,16 +40,18 @@ class ExercicioItemAdapter(private val listaExercicio: List<Exercicio>, private 
 
     inner class ExercicioViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         private val exercicioNome: TextView = itemView.findViewById(R.id.tv_exercicio_nome)
-        private val exercicioRepeticoes: TextView = itemView.findViewById(R.id.tv_exercicio_repeticoes)
+        private val exercicioRepeticoes: TextView =
+            itemView.findViewById(R.id.tv_exercicio_repeticoes)
         private val exercicioSeries: TextView = itemView.findViewById(R.id.tv_exercicio_series)
-        private val teste: LinearLayout = itemView.findViewById(R.id.item_exercicio)
+        private val itemExercicio: LinearLayout = itemView.findViewById(R.id.item_exercicio)
+        private val infoExercicio: ImageView =
+            exercicioView.findViewById(R.id.iv_informacao_exercicio)
 
-
-        fun bindView(exercicio: Exercicio) {
+        fun bindView(exercicio: Exercicio, listaExercicio: List<Exercicio>) {
             exercicioNome.text = exercicio.nome
             exercicioRepeticoes.text = "repetições ${exercicio.quantidade}"
             exercicioSeries.text = "series ${exercicio.repeticao}"
-            teste.setOnClickListener {
+            itemExercicio.setOnClickListener {
                 it.animate()
                     .scaleX(0.9f)
                     .scaleY(0.9f)
@@ -53,10 +65,11 @@ class ExercicioItemAdapter(private val listaExercicio: List<Exercicio>, private 
                     }
                     .start()
 
+                currentExercicioIndex = listaExercicio.indexOf(exercicio)
+
                 exercicioView.findViewById<TextView>(R.id.tv_exercicio_nome_titulo).text =
                     exercicio.nome.uppercase()
 
-                println(exercicio.imagem)
                 Picasso.get().load(exercicio.imagem)
                     .into(exercicioView.findViewById<ImageView>(R.id.iv_exercicio))
 
@@ -66,6 +79,18 @@ class ExercicioItemAdapter(private val listaExercicio: List<Exercicio>, private 
                 exercicioView.findViewById<TextView>(R.id.numero_repeticao).text =
                     exercicio.quantidade.toString()
             }
+
+            infoExercicio.setOnClickListener {
+                val builder = AlertDialog.Builder(context)
+                builder.setMessage(listaExercicio[currentExercicioIndex].descricao)
+                    .setCancelable(false)
+                    .setPositiveButton("OK", DialogInterface.OnClickListener { dialog, id ->
+                        dialog.dismiss()
+                    })
+                val alert = builder.create()
+                alert.show()
+            }
         }
+
     }
 }
