@@ -1,22 +1,22 @@
 package com.example.befitapp
 
+import android.content.Intent
+import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageButton
 import android.widget.ImageView
+import android.widget.LinearLayout
 import android.widget.TextView
-import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.RecyclerView
+import com.example.befitapp.entity.BefitApi
 import com.example.befitapp.entity.Catalogo
-import com.example.befitapp.service.BeFitApiService
-import com.google.gson.GsonBuilder
 import com.squareup.picasso.Picasso
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-import retrofit2.Retrofit
-import retrofit2.converter.gson.GsonConverterFactory
 
 class CatalogoTreinoAdapter(private val listaTreinos: List<Catalogo>) :
     RecyclerView.Adapter<CatalogoTreinoAdapter.CatalogoViewHolder>() {
@@ -41,8 +41,33 @@ class CatalogoTreinoAdapter(private val listaTreinos: List<Catalogo>) :
         private val nomeTreino: TextView = itemView.findViewById(R.id.nome_catalogo)
         private val descricaoTreino: TextView = itemView.findViewById(R.id.descricao_catalogo)
         private val likeButton: ImageButton = itemView.findViewById(R.id.like_catalogo)
+        private val itemTreino: LinearLayout = itemView.findViewById(R.id.item)
 
         fun bindView(treino: Catalogo) {
+            itemTreino.setOnClickListener {
+                it.animate()
+                    .scaleX(0.9f)
+                    .scaleY(0.9f)
+                    .setDuration(100)
+                    .withEndAction {
+                        it.animate()
+                            .scaleX(1f)
+                            .scaleY(1f)
+                            .setDuration(100)
+                            .start()
+                    }
+                    .start()
+
+                val fragment = ExercicioFragment()
+                val bundle = Bundle()
+                bundle.putInt("treino_id", treino.id)
+                fragment.arguments = bundle
+                val transaction = (itemView.context as AppCompatActivity).supportFragmentManager.beginTransaction()
+                transaction.replace(R.id.fragment_container, fragment)
+                transaction.addToBackStack(null)
+                transaction.commit()
+            }
+
             Picasso.get().load(treino.imagem).into(imagemTreino)
             nomeTreino.text = treino.nome
             descricaoTreino.text = treino.descricao
@@ -50,11 +75,7 @@ class CatalogoTreinoAdapter(private val listaTreinos: List<Catalogo>) :
             likeButton.setOnClickListener {
                 treino.favoritado = !treino.favoritado
 
-                val apiService = Retrofit.Builder()
-                    .baseUrl("http://10.0.2.2:8080/")
-                    .addConverterFactory(GsonConverterFactory.create(GsonBuilder().create()))
-                    .build()
-                    .create(BeFitApiService::class.java)
+                val apiService = BefitApi.http()
 
                 val call = if (treino.favoritado) {
                     likeButton.setImageResource(R.drawable.ic_like_vermelho)

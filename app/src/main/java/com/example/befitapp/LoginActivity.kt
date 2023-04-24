@@ -7,6 +7,7 @@ import android.widget.Button
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.befitapp.databinding.ActivityLoginBinding
+import com.example.befitapp.entity.BefitApi
 import com.example.befitapp.entity.Login
 import com.example.befitapp.service.BeFitApiService
 import com.google.android.material.textfield.TextInputLayout
@@ -20,9 +21,6 @@ class LoginActivity : AppCompatActivity() {
     private lateinit var loginButton: Button
     private lateinit var binding: ActivityLoginBinding
     private var emailApi: String = ""
-
-    private val api = BeFitApiService.getInstance()
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -56,7 +54,7 @@ class LoginActivity : AppCompatActivity() {
                 Toast.makeText(this, "Email inválido.", Toast.LENGTH_SHORT).show()
             } else {
                 val intent = Intent(this@LoginActivity, HomeActivity::class.java)
-                val call = api.loginUsuario(emailUser, senhaUser)
+                val call = BefitApi.http().loginUsuario(emailUser, senhaUser)
                 call.enqueue(object: Callback<Login> {
                     override fun onResponse(call: Call<Login>, response: Response<Login>) {
                         try {
