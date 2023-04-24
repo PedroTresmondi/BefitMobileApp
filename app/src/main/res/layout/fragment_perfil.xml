@@ -77,18 +77,6 @@
             android:id="@+id/recycler_view_dietas"
             android:layout_width="match_parent"
             android:layout_height="150dp" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:paddingHorizontal="10dp"
-            android:layout_marginTop="10dp"
-            android:text="Importar dieta:"
-            android:textColor="#FFFFFF"
-            android:textSize="20sp" />
-        <include layout="@layout/adicione_dieta" />
-
     </LinearLayout>
 
 </FrameLayout>
