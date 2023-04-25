@@ -65,6 +65,32 @@ class FavoritoAdapter(val listaFavoritos: List<Catalogo>, val type: String) :
                     transaction.addToBackStack(null)
                     transaction.commit()
                 }
+                if (type == "dieta") {
+                    itemFavorito.setOnClickListener {
+                        it.animate()
+                            .scaleX(0.9f)
+                            .scaleY(0.9f)
+                            .setDuration(100)
+                            .withEndAction {
+                                it.animate()
+                                    .scaleX(1f)
+                                    .scaleY(1f)
+                                    .setDuration(100)
+                                    .start()
+                            }
+                            .start()
+
+                        val fragment = ExercicioFragment()
+                        val bundle = Bundle()
+                        bundle.putInt("dieta_id", item.id)
+                        fragment.arguments = bundle
+                        val transaction =
+                            (itemView.context as AppCompatActivity).supportFragmentManager.beginTransaction()
+                        transaction.replace(R.id.fragment_container, fragment)
+                        transaction.addToBackStack(null)
+                        transaction.commit()
+                    }
+                }
             }
         }
     }

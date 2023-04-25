@@ -1,9 +1,6 @@
 package com.example.befitapp.service
 
-import com.example.befitapp.entity.Catalogo
-import com.example.befitapp.entity.Exercicio
-import com.example.befitapp.entity.LoginResponse
-import com.example.befitapp.entity.Usuario
+import com.example.befitapp.entity.*
 import retrofit2.Call
 import retrofit2.http.*
 
@@ -33,4 +30,19 @@ interface BeFitApiService {
 
     @GET("/dietas/favoritos/{personId}")
     fun getDietaFavoritos(@Path("personId") personId: String): Call<List<Catalogo>>
+
+
+    @GET("/dietas/catalogo/{personId}")
+    fun getDietas(@Path("personId") personId: String): Call<List<Dieta>>
+
+    @POST("/dietas/favoritar/{personId}/{dietaId}")
+    fun favoritarDieta(@Path("personId") personId: String, @Path("dietaId") dietaId: Int): Call<String>
+
+    @DELETE("/dietas/desfavoritar/{personId}/{dietaId}")
+    fun desfavoritarDieta(@Path("personId") personId: String, @Path("dietaId") dietaId: Int): Call<String>
+
+    @GET("/dietas/{dietaId}")
+    fun getIngrediente(@Path("dietaId") dietaId: Int): Call<List<Ingrediente>>
+
+
 }

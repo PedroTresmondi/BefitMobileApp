@@ -5,58 +5,18 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.befitapp.entity.BefitApi
 import com.example.befitapp.entity.Catalogo
+import com.example.befitapp.entity.Dieta
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 
 class DietaFragment : Fragment() {
-    private val listaDietas = listOf(
-        Catalogo(
-            1,
-            "DietaA",
-            "descricaoA",
-            "https://cdn-icons-png.flaticon.com/512/815/815128.png",
-            true
-        ),
-        Catalogo(
-            2,
-            "DietaB",
-            "descricaoB",
-            "https://cdn-icons-png.flaticon.com/512/815/815128.png",
-            false
-        ),
-        Catalogo(
-            3,
-            "DietaC",
-            "descricaoC",
-            "https://cdn-icons-png.flaticon.com/512/815/815128.png",
-            false
-        ),
-        Catalogo(
-            4,
-            "DietaD",
-            "descricaoD",
-            "https://cdn-icons-png.flaticon.com/512/815/815128.png",
-            true
-        ),
-        Catalogo(
-            5,
-            "DietaE",
-            "descricaoE",
-            "https://cdn-icons-png.flaticon.com/512/815/815128.png",
-            false
-        ),
-        Catalogo(
-            6,
-            "DietaF",
-            "descricaoF",
-            "https://cdn-icons-png.flaticon.com/512/815/815128.png",
-            true
-        ),
-    )
-
-    private val adapter = CatalogoDietaAdapter(listaDietas)
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -66,7 +26,25 @@ class DietaFragment : Fragment() {
 
         val recyclerView: RecyclerView = view.findViewById(R.id.recycler_view_dieta_catalogo)
         recyclerView.layoutManager = LinearLayoutManager(context)
-        recyclerView.adapter = adapter
+        val personId = arguments?.getString("personId")
+        recyclerView.adapter = CatalogoTreinoAdapter(emptyList(), personId!!)
+
+
+        val call = BefitApi.http().getDietas(personId)
+
+        call.enqueue(object : Callback<List<Dieta>> {
+            override fun onResponse(call: Call<List<Dieta>>, response: Response<List<Dieta>>) {
+                if (response.isSuccessful) {
+                    response.body()?.let {
+                        recyclerView.adapter = CatalogoDietaAdapter(it, personId)
+                    }
+                }
+            }
+
+            override fun onFailure(call: Call<List<Dieta>>, t: Throwable) {
+                Toast.makeText(context, "Network Error", Toast.LENGTH_SHORT).show()
+            }
+        })
 
         return view
     }
