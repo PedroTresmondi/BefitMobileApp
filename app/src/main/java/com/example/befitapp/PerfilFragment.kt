@@ -1,6 +1,7 @@
 package com.example.befitapp
 
 import android.Manifest
+import android.content.Context.MODE_PRIVATE
 import android.content.pm.PackageManager
 import android.os.Bundle
 import android.view.LayoutInflater

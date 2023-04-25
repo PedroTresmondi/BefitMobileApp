@@ -32,4 +32,19 @@
     <string name="nome_usuario">Default Usuario</string>
     <string name="academias_proximas">Academias próximas:</string>
 
+
+
+
+    <string name="lgpd_term"> <br> </br> <p> <b> Prezado usuário, Agradecemos por utilizar nossos serviços.</b></p>
+          <br> </br>Queremos informá-lo que estamos em conformidade com a Lei Geral de Proteção de Dados Pessoais (LGPD) e nos preocupamos com a proteção dos seus dados pessoais.
+        Como empresa, nos comprometemos em coletar apenas os dados necessários para fornecer nossos serviços e utilizá-los de forma responsável e segura.
+        Além disso, garantimos que seus dados pessoais serão tratados em conformidade com as leis e regulamentos aplicáveis.
+        Nosso objetivo é fornecer um ambiente seguro e confiável para que você possa utilizar nossos serviços com tranquilidade.
+        Para isso, implementamos medidas de segurança apropriadas para proteger seus dados pessoais contra possíveis violações.
+         <br> </br>
+        Caso deseje obter mais informações sobre como coletamos e tratamos seus dados pessoais, ou para exercer seus direitos previstos na LGPD, como acesso, correção, exclusão e portabilidade de dados, você pode entrar em contato com nossa equipe de suporte ao cliente.
+          <br> </br>
+        Agradecemos pela sua confiança em nossos serviços e estamos sempre à disposição para esclarecer qualquer dúvida que possa surgir. Atenciosamente, Equipe de Proteção de Dados Pessoais.</string>
+
+
 </resources>

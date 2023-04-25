@@ -3,7 +3,11 @@ package com.example.befitapp
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.Gravity
+import android.view.ViewGroup
 import android.widget.Button
+import android.widget.CheckBox
+import android.widget.PopupWindow
 import android.widget.Toast
 
 import com.example.befitapp.databinding.ActivityRegisterBinding
@@ -33,14 +37,16 @@ class RegisterActivity : AppCompatActivity() {
         binding.loginSubTitle.setOnClickListener {
             startActivity(Intent(this, LoginActivity::class.java))
         }
-
-        userTextInputLayout = findViewById(R.id.ipt_user)
-        emailTextInputLayout = findViewById(R.id.ipt_email)
-        passwordTextInputLayout = findViewById(R.id.ipt_password)
-        confirmPasswordTextInputLayout = findViewById(R.id.ipt_confirm_password)
         registerButton = findViewById(R.id.btn_confirm)
 
-        registerButton.setOnClickListener {
+
+        fun registerUser() {
+            userTextInputLayout = findViewById(R.id.ipt_user)
+            emailTextInputLayout = findViewById(R.id.ipt_email)
+            passwordTextInputLayout = findViewById(R.id.ipt_password)
+            confirmPasswordTextInputLayout = findViewById(R.id.ipt_confirm_password)
+            registerButton = findViewById(R.id.btn_confirm)
+
             val user = userTextInputLayout.editText?.text.toString()
             val email = emailTextInputLayout.editText?.text.toString()
             val password = passwordTextInputLayout.editText?.text.toString()
@@ -79,7 +85,6 @@ class RegisterActivity : AppCompatActivity() {
                 call.enqueue(object: Callback<Usuario> {
                     override fun onResponse(call: Call<Usuario>, response: Response<Usuario>) {
                         if (response.isSuccessful) {
-                            Toast.makeText(applicationContext, "Usuário criado com sucesso", Toast.LENGTH_SHORT).show()
                             val intent = Intent(this@RegisterActivity, LoginActivity::class.java)
                             startActivity(intent)
                         } else {
@@ -91,9 +96,28 @@ class RegisterActivity : AppCompatActivity() {
                     }
                 })
             }
+
         }
+        registerButton.setOnClickListener {
+            val inflater = layoutInflater
+            val popupView = inflater.inflate(R.layout.activity_lgpd, null)
+            val termsCheckBox = popupView.findViewById<CheckBox>(R.id.chk_aceitar_termos)
+            val confirmButton = popupView.findViewById<Button>(R.id.btn_confirm_popup)
+            val popupWindow = PopupWindow(popupView, ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT, true)
 
-
+            popupWindow.showAtLocation(binding.root, Gravity.CENTER, 0, 0)
+            confirmButton.setOnClickListener {
+                if (termsCheckBox.isChecked) {
+                    popupWindow.dismiss()
+                    registerUser()
+                } else {
+                    Toast.makeText(this, "Você deve aceitar os termos e condições para continuar.", Toast.LENGTH_SHORT).show()
+                }
+            }
+        }
     }
 }
+
+
+
 
