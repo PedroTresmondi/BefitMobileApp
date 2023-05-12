@@ -57,7 +57,7 @@ class CatalogoDietaAdapter(private val listaDietas: List<Dieta>, private val per
                     }
                     .start()
 
-                val fragment = ExercicioFragment()
+                val fragment = CatalogoIngredienteFragment()
                 val bundle = Bundle()
                 bundle.putInt("dieta_id", dieta.id)
                 fragment.arguments = bundle
