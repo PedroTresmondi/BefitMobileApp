@@ -40,56 +40,44 @@ class FavoritoAdapter(val listaFavoritos: List<Catalogo>, val type: String) :
             iconeTmageView.scaleX = 0.7F
             nomeTextView.text = item.nome
 
-            if (type == "treino") {
-                itemFavorito.setOnClickListener {
-                    it.animate()
-                        .scaleX(0.9f)
-                        .scaleY(0.9f)
-                        .setDuration(100)
-                        .withEndAction {
-                            it.animate()
-                                .scaleX(1f)
-                                .scaleY(1f)
-                                .setDuration(100)
-                                .start()
-                        }
-                        .start()
-
-                    val fragment = ExercicioFragment()
-                    val bundle = Bundle()
-                    bundle.putInt("treino_id", item.id)
-                    fragment.arguments = bundle
-                    val transaction =
-                        (itemView.context as AppCompatActivity).supportFragmentManager.beginTransaction()
-                    transaction.replace(R.id.fragment_container, fragment)
-                    transaction.addToBackStack(null)
-                    transaction.commit()
-                }
-                if (type == "dieta") {
-                    itemFavorito.setOnClickListener {
+            itemFavorito.setOnClickListener {
+                it.animate()
+                    .scaleX(0.9f)
+                    .scaleY(0.9f)
+                    .setDuration(100)
+                    .withEndAction {
                         it.animate()
-                            .scaleX(0.9f)
-                            .scaleY(0.9f)
+                            .scaleX(1f)
+                            .scaleY(1f)
                             .setDuration(100)
-                            .withEndAction {
-                                it.animate()
-                                    .scaleX(1f)
-                                    .scaleY(1f)
-                                    .setDuration(100)
-                                    .start()
-                            }
                             .start()
+                    }
+                    .start()
 
-                        val fragment = ExercicioFragment()
+                val fragment = when (type) {
+                    "treino" -> {
+                        val treinoFragment = ExercicioFragment()
+                        val bundle = Bundle()
+                        bundle.putInt("treino_id", item.id)
+                        treinoFragment.arguments = bundle
+                        treinoFragment
+                    }
+                    "dieta" -> {
+                        val dietaFragment = CatalogoIngredienteFragment()
                         val bundle = Bundle()
                         bundle.putInt("dieta_id", item.id)
-                        fragment.arguments = bundle
-                        val transaction =
-                            (itemView.context as AppCompatActivity).supportFragmentManager.beginTransaction()
-                        transaction.replace(R.id.fragment_container, fragment)
-                        transaction.addToBackStack(null)
-                        transaction.commit()
+                        dietaFragment.arguments = bundle
+                        dietaFragment
                     }
+                    else -> null
+                }
+
+                fragment?.let {
+                    val transaction =
+                        (itemView.context as AppCompatActivity).supportFragmentManager.beginTransaction()
+                    transaction.replace(R.id.fragment_container, it)
+                    transaction.addToBackStack(null)
+                    transaction.commit()
                 }
             }
         }

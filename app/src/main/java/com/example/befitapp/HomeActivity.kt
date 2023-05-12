@@ -22,7 +22,6 @@ class HomeActivity : AppCompatActivity() {
         supportFragmentManager.beginTransaction()
             .replace(R.id.fragment_container, defaultFragment)
             .commit()
-
         bottomNavigationView.setOnItemSelectedListener { menuItem ->
             when (menuItem.itemId) {
                 R.id.menu_training -> {

@@ -67,10 +67,13 @@ class CatalogoIngredienteFragment : Fragment() {
             }
         })
 
-        /*fragmentIngrediente.findViewById<ImageView>(R.id.iv_voltar_dieta).let {
+        view.findViewById<ImageView>(R.id.iv_voltar_dieta).let {
             it.setOnClickListener {
                 parentFragmentManager.popBackStack()
             }
-        }*/
+
+
+            //
+        }
     }
 }

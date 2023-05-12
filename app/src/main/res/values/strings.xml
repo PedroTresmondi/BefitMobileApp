@@ -46,6 +46,8 @@
     <string name="ingrediente_1">Ingrediente 1</string>
     <string name="porcao_15">porcao 15</string>
     <string name="dieta_example">DIETA EXAMPLE</string>
+    <string name="nome_da_activity">Nome da activity</string>
+    <string name="calorias">Calorias</string>
 
 
 </resources>

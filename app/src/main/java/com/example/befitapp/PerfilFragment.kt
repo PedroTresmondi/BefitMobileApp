@@ -70,7 +70,9 @@ class PerfilFragment : Fragment(), OnMapReadyCallback {
 
 
         view.findViewById<TextView>(R.id.nome).let {
-            it.text = "Bem vindo! ${arguments?.getString("nome")}"
+            val nome = arguments?.getString("nome")
+            val nomeFormatado = nome?.substring(0, 1)?.capitalize() + nome?.substring(1)
+            it.text = "Olá! $nomeFormatado"
         }
 
 

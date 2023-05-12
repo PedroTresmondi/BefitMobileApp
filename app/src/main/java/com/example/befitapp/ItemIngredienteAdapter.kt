@@ -25,7 +25,9 @@ class ItemIngredienteAdapter(val lista: MutableList<Ingrediente>,
     override fun onBindViewHolder(holder: ItemIngredienteAdapter.IngredienteViewHolder, position: Int) {
         val ingrediente = lista.get(position)
         holder.nome.text = ingrediente.nome
-        holder.porcao.text = ingrediente.porcao.toString()
+        holder.porcao.text = "${ingrediente.porcao}g"
+        holder.caloria.text =  "${ingrediente.caloria} kcal"
+
     }
 
     override fun getItemCount(): Int {
@@ -35,5 +37,6 @@ class ItemIngredienteAdapter(val lista: MutableList<Ingrediente>,
     class IngredienteViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val nome = itemView.findViewById<TextView>(R.id.tv_ingrediente_nome)
         val porcao = itemView.findViewById<TextView>(R.id.tv_ingrediente_porcao)
+        val caloria = itemView.findViewById<TextView>(R.id.tv_ingrediente_caloria)
     }
 }

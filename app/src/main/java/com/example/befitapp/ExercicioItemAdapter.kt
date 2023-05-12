@@ -49,8 +49,8 @@ class ExercicioItemAdapter(
 
         fun bindView(exercicio: Exercicio, listaExercicio: List<Exercicio>) {
             exercicioNome.text = exercicio.nome
-            exercicioRepeticoes.text = "repetições ${exercicio.quantidade}"
-            exercicioSeries.text = "series ${exercicio.repeticao}"
+            exercicioRepeticoes.text = "Repetições: ${exercicio.quantidade}"
+            exercicioSeries.text = "Series: ${exercicio.repeticao}"
             itemExercicio.setOnClickListener {
                 it.animate()
                     .scaleX(0.9f)
