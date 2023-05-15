@@ -34,14 +34,19 @@
                 android:layout_height="18dp"
                 android:layout_gravity="center"
                 android:layout_marginHorizontal="60dp"
-                android:text="@string/dieta_example"
+                android:text=""
                 android:textColor="@color/white"
                 android:autoSizeTextType="uniform"
                 android:autoSizeMinTextSize="12sp"
                 android:autoSizeMaxTextSize="18sp"
                 android:gravity="center"/>
 
-
+            <ImageView
+                android:id="@+id/iv_informacao_dieta"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_gravity="center_vertical"
+                android:src="@drawable/outline_info_24" />
 
         </LinearLayout>
 

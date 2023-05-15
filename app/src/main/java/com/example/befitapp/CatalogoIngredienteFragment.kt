@@ -1,5 +1,7 @@
 package com.example.befitapp
 
+import android.app.AlertDialog
+import android.content.DialogInterface
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -10,9 +12,8 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import androidx.recyclerview.widget.RecyclerView.LayoutManager
 import com.example.befitapp.entity.BefitApi
-import com.example.befitapp.entity.Dieta
+import com.example.befitapp.entity.DietaCompleta
 import com.example.befitapp.entity.Ingrediente
 import retrofit2.Call
 import retrofit2.Callback
@@ -35,6 +36,9 @@ class CatalogoIngredienteFragment : Fragment() {
         val lista = mutableListOf<Ingrediente>()
 
         val recyclerView1 = view?.findViewById<RecyclerView>(R.id.recycler_view_item_ingrediente)!!
+        val tituloDieta = view.findViewById<TextView>(R.id.tv_dieta_nome_titulo)
+
+        val viewInfo: ImageView = view.findViewById(R.id.iv_informacao_dieta)
 
         adapter = ItemIngredienteAdapter(lista, view.context)
 
@@ -46,22 +50,34 @@ class CatalogoIngredienteFragment : Fragment() {
 
         val dietaId = arguments?.getInt("dieta_id")
 
+
         val call = BefitApi.http().getDietaUnique(dietaId!!)
 
-        call.enqueue(object : Callback<Dieta> {
+        call.enqueue(object : Callback<DietaCompleta> {
             override fun onResponse(
-                call: Call<Dieta>,
-                response: Response<Dieta>
+                call: Call<DietaCompleta>,
+                response: Response<DietaCompleta>
             ) {
                 if (response.isSuccessful) {
-                    response.body()?.let {
-                        lista.addAll(it.ingredientes)
+                    response.body()?.let { dietaCompleta ->
+                        lista.addAll(dietaCompleta.ingredientes)
+                        tituloDieta.text = dietaCompleta.dieta.nome
+                        viewInfo.setOnClickListener {
+                            val builder = AlertDialog.Builder(context)
+                            builder.setMessage(dietaCompleta.dieta.descricao)
+                                .setCancelable(false)
+                                .setPositiveButton("OK", DialogInterface.OnClickListener { dialog, id ->
+                                    dialog.dismiss()
+                                })
+                            val alert = builder.create()
+                            alert.show()
+                        }
                         adapter.notifyDataSetChanged()
                     }
                 }
             }
 
-            override fun onFailure(call: Call<Dieta>, t: Throwable) {
+            override fun onFailure(call: Call<DietaCompleta>, t: Throwable) {
                 t.printStackTrace()
                 Toast.makeText(context, "Network Error", Toast.LENGTH_SHORT).show()
             }

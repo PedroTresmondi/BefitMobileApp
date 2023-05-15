@@ -5,7 +5,5 @@ data class Dieta(
     val nome: String,
     val descricao: String,
     val imagem: String,
-    var favoritado: Boolean,
-    val ingredientes: List<Ingrediente>
+    var favoritado: Boolean = false
 )
-

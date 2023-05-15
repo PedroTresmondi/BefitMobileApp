@@ -12,12 +12,13 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.RecyclerView
 import com.example.befitapp.entity.BefitApi
 import com.example.befitapp.entity.Dieta
+import com.example.befitapp.entity.DietaCompleta
 import com.squareup.picasso.Picasso
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class CatalogoDietaAdapter(private val listaDietas: List<Dieta>, private val personId: String) :
+class CatalogoDietaAdapter(private val listaDietaCompletas: List<Dieta>, private val personId: String) :
     RecyclerView.Adapter<CatalogoDietaAdapter.CatalogoViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CatalogoViewHolder {
@@ -27,12 +28,12 @@ class CatalogoDietaAdapter(private val listaDietas: List<Dieta>, private val per
     }
 
     override fun onBindViewHolder(holder: CatalogoViewHolder, position: Int) {
-        val dieta = listaDietas[position]
+        val dieta = listaDietaCompletas[position]
         holder.bindView(dieta)
     }
 
     override fun getItemCount(): Int {
-        return listaDietas.size
+        return listaDietaCompletas.size
     }
 
     inner class CatalogoViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
@@ -42,7 +43,7 @@ class CatalogoDietaAdapter(private val listaDietas: List<Dieta>, private val per
         private val likeButton: ImageButton = itemView.findViewById(R.id.like_catalogo)
         private val itemDieta: LinearLayout = itemView.findViewById(R.id.item)
 
-        fun bindView(dieta: Dieta) {
+        fun bindView(dietaCompleta: Dieta) {
             itemDieta.setOnClickListener {
                 it.animate()
                     .scaleX(0.9f)
@@ -59,7 +60,7 @@ class CatalogoDietaAdapter(private val listaDietas: List<Dieta>, private val per
 
                 val fragment = CatalogoIngredienteFragment()
                 val bundle = Bundle()
-                bundle.putInt("dieta_id", dieta.id)
+                bundle.putInt("dieta_id", dietaCompleta.id)
                 fragment.arguments = bundle
                 val transaction = (itemView.context as AppCompatActivity).supportFragmentManager.beginTransaction()
                 transaction.replace(R.id.fragment_container, fragment)
@@ -67,21 +68,21 @@ class CatalogoDietaAdapter(private val listaDietas: List<Dieta>, private val per
                 transaction.commit()
             }
 
-            Picasso.get().load(dieta.imagem).into(imagemDieta)
-            nomeDieta.text = dieta.nome
-            descricaoDieta.text = dieta.descricao
-            likeButton.setImageResource(if (dieta.favoritado) R.drawable.ic_like_vermelho else R.drawable.ic_like)
+            Picasso.get().load(dietaCompleta.imagem).into(imagemDieta)
+            nomeDieta.text = dietaCompleta.nome
+            descricaoDieta.text = dietaCompleta.descricao
+            likeButton.setImageResource(if (dietaCompleta.favoritado) R.drawable.ic_like_vermelho else R.drawable.ic_like)
             likeButton.setOnClickListener {
-                dieta.favoritado = !dieta.favoritado
+                dietaCompleta.favoritado = !dietaCompleta.favoritado
 
                 val apiService = BefitApi.http()
 
-                val call = if (dieta.favoritado) {
+                val call = if (dietaCompleta.favoritado) {
                     likeButton.setImageResource(R.drawable.ic_like_vermelho)
-                    apiService.favoritarDieta(personId, dieta.id)
+                    apiService.favoritarDieta(personId, dietaCompleta.id)
                 } else {
                     likeButton.setImageResource(R.drawable.ic_like)
-                    apiService.desfavoritarDieta(personId, dieta.id)
+                    apiService.desfavoritarDieta(personId, dietaCompleta.id)
                 }
 
                 call.enqueue(object : Callback<String> {

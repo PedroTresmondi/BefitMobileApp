@@ -1,15 +1,20 @@
 package com.example.befitapp
 
+import android.app.AlertDialog
 import android.content.Context
+import android.content.DialogInterface
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.befitapp.entity.Ingrediente
 
-class ItemIngredienteAdapter(val lista: MutableList<Ingrediente>,
-                             val context: Context)
+class ItemIngredienteAdapter(
+    val lista: MutableList<Ingrediente>,
+    val context: Context
+)
     : RecyclerView.Adapter<ItemIngredienteAdapter.IngredienteViewHolder>() {
     override fun onCreateViewHolder(
         parent: ViewGroup,

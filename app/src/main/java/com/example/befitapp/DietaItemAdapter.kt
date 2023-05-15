@@ -6,11 +6,11 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import com.example.befitapp.entity.Dieta
+import com.example.befitapp.entity.DietaCompleta
 import com.example.befitapp.entity.Ingrediente
 
 class DietaItemAdapter(
-    private val listaIngrediente: List<Dieta>,
+    private val listaIngrediente: List<DietaCompleta>,
     private val ingredientesView: View,
     private val context: Context?
 ) :
@@ -45,8 +45,6 @@ class DietaItemAdapter(
 
             ingredientesView.findViewById<TextView>(R.id.tv_dieta_nome_titulo).text =
                 ingrediente.nome.uppercase()
-
-
         }
     }
 
