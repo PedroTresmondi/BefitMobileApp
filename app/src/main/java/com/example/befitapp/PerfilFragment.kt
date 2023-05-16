@@ -151,11 +151,6 @@ class PerfilFragment : Fragment(), OnMapReadyCallback {
                 googleMap.isMyLocationEnabled = true
                 googleMap.uiSettings.isMyLocationButtonEnabled = true
                 googleMap.setOnMyLocationButtonClickListener {
-                    Toast.makeText(
-                        requireContext(),
-                        "My Location button clicked",
-                        Toast.LENGTH_SHORT
-                    ).show()
                     false
                 }
                 val fusedLocationClient =
