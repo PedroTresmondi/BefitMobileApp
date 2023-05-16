@@ -23,8 +23,9 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:text="@string/nome_usuario"
-                android:textColor="#C1BFBF"
-                android:textSize="26sp" />
+                android:textColor="#FFFFFF"
+                android:textStyle="bold"
+                android:textSize="20sp" />
         </LinearLayout>
 
         <LinearLayout

@@ -32,8 +32,12 @@ class LoginActivity : AppCompatActivity() {
         passwordTextInputLayout = findViewById(R.id.ipt_password)
         loginButton = findViewById(R.id.btn_login)
         loginButton.setOnClickListener {
-            val emailUser = emailTextInputLayout.editText?.text.toString()
-            val senhaUser = passwordTextInputLayout.editText?.text.toString()
+
+            val emailUser = "pedro@gmail.com"
+            val senhaUser = "pedroSenha"
+
+//            val emailUser = emailTextInputLayout.editText?.text.toString()
+//            val senhaUser = passwordTextInputLayout.editText?.text.toString()
 
             fun isValidEmail(email: String): Boolean {
                 val emailPattern = "[a-zA-Z0-9._-]+@[a-z]+[a-z]+\\.com"

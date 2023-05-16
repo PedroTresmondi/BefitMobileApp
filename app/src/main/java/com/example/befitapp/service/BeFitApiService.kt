@@ -35,6 +35,9 @@ interface BeFitApiService {
     @GET("/dietas/catalogo/{personId}")
     fun getDietas(@Path("personId") personId: String): Call<List<Dieta>>
 
+    @GET("/dietas/{dietaId}")
+    fun getDietaUnique(@Path("dietaId") dietaId: Int): Call<DietaCompleta>
+
     @POST("/dietas/favoritar/{personId}/{dietaId}")
     fun favoritarDieta(@Path("personId") personId: String, @Path("dietaId") dietaId: Int): Call<String>
 

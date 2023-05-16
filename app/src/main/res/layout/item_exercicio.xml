@@ -2,12 +2,12 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="80dp"
+    android:layout_height="70dp"
     android:layout_margin="10dp">
     <LinearLayout
         android:id="@+id/item_exercicio"
         android:layout_width="match_parent"
-        android:layout_height="80dp"
+        android:layout_height="70dp"
         android:orientation="vertical"
         android:paddingHorizontal="10dp"
         tools:ignore="MissingConstraints"
@@ -20,24 +20,31 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Exercicio 1"
-            android:textSize="20dp"
+            android:layout_gravity="center"
+            android:textSize="20sp"
             android:textColor="@color/black" />
-
+        <LinearLayout
+            android:orientation="horizontal"
+            android:padding="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
         <TextView
             android:id="@+id/tv_exercicio_series"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="series 3"
-            android:textSize="20dp"
+            android:layout_weight="1"
+            android:textSize="18sp"
             android:textColor="@color/black" />
 
-        <TextView
-            android:id="@+id/tv_exercicio_repeticoes"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="repetições 15"
-            android:textSize="20dp"
-            android:textColor="@color/black" />
+            <TextView
+                android:id="@+id/tv_exercicio_repeticoes"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="repetições 15"
+                android:textColor="@color/black"
+                android:textSize="18sp" />
+        </LinearLayout>
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

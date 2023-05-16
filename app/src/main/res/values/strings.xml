@@ -33,8 +33,6 @@
     <string name="academias_proximas">Academias próximas:</string>
 
 
-
-
     <string name="lgpd_term"> <br> </br> <p> <b> Prezado usuário, Agradecemos por utilizar nossos serviços.</b></p>
           <br> </br>Queremos informá-lo que estamos em conformidade com a Lei Geral de Proteção de Dados Pessoais (LGPD) e nos preocupamos com a proteção dos seus dados pessoais.
         Como empresa, nos comprometemos em coletar apenas os dados necessários para fornecer nossos serviços e utilizá-los de forma responsável e segura.
@@ -45,6 +43,11 @@
         Caso deseje obter mais informações sobre como coletamos e tratamos seus dados pessoais, ou para exercer seus direitos previstos na LGPD, como acesso, correção, exclusão e portabilidade de dados, você pode entrar em contato com nossa equipe de suporte ao cliente.
           <br> </br>
         Agradecemos pela sua confiança em nossos serviços e estamos sempre à disposição para esclarecer qualquer dúvida que possa surgir. Atenciosamente, Equipe de Proteção de Dados Pessoais.</string>
+    <string name="ingrediente_1">Ingrediente 1</string>
+    <string name="porcao_15">porcao 15</string>
+    <string name="dieta_example">DIETA EXAMPLE</string>
+    <string name="nome_da_activity">Nome da activity</string>
+    <string name="calorias">Calorias</string>
 
 
 </resources>

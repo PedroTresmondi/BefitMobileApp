@@ -9,8 +9,8 @@ import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.befitapp.entity.BefitApi
-import com.example.befitapp.entity.Catalogo
 import com.example.befitapp.entity.Dieta
+import com.example.befitapp.entity.DietaCompleta
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response

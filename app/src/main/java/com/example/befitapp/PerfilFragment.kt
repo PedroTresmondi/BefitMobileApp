@@ -70,7 +70,9 @@ class PerfilFragment : Fragment(), OnMapReadyCallback {
 
 
         view.findViewById<TextView>(R.id.nome).let {
-            it.text = "Bem vindo! ${arguments?.getString("nome")}"
+            val nome = arguments?.getString("nome")
+            val nomeFormatado = nome?.substring(0, 1)?.capitalize() + nome?.substring(1)
+            it.text = "Olá! $nomeFormatado"
         }
 
 
@@ -149,11 +151,6 @@ class PerfilFragment : Fragment(), OnMapReadyCallback {
                 googleMap.isMyLocationEnabled = true
                 googleMap.uiSettings.isMyLocationButtonEnabled = true
                 googleMap.setOnMyLocationButtonClickListener {
-                    Toast.makeText(
-                        requireContext(),
-                        "My Location button clicked",
-                        Toast.LENGTH_SHORT
-                    ).show()
                     false
                 }
                 val fusedLocationClient =

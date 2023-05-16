@@ -1,6 +1,8 @@
 package com.example.befitapp
 
+import android.content.Intent
 import android.os.Bundle
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.bottomnavigation.BottomNavigationView
@@ -14,6 +16,25 @@ class HomeActivity : AppCompatActivity() {
         var topTextView = findViewById<TextView>(R.id.top_navigation)
         topTextView.text = "Perfil"
 
+        var exitButton = findViewById<ImageView>(R.id.item_exit)
+        exitButton.setOnClickListener {
+            it.animate()
+                .scaleX(0.9f)
+                .scaleY(0.9f)
+                .setDuration(100)
+                .withEndAction {
+                    it.animate()
+                        .scaleX(1f)
+                        .scaleY(1f)
+                        .setDuration(100)
+                        .start()
+                }
+                .start()
+            intent = Intent(this, MainActivity::class.java)
+            startActivity(intent)
+        }
+
+
         val defaultFragment = PerfilFragment()
         val bundle = Bundle()
         bundle.putString("nome", intent.getStringExtra("nome"))
@@ -22,7 +43,6 @@ class HomeActivity : AppCompatActivity() {
         supportFragmentManager.beginTransaction()
             .replace(R.id.fragment_container, defaultFragment)
             .commit()
-
         bottomNavigationView.setOnItemSelectedListener { menuItem ->
             when (menuItem.itemId) {
                 R.id.menu_training -> {
