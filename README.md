@@ -9,6 +9,9 @@
 - Armazenamento seguro de dados: O Befit utiliza um banco de dados hospedado na Azure para armazenar e gerenciar as informações dos usuários, garantindo a segurança e confiabilidade dos dados.
 - Desempenho e disponibilidade: Com o uso de load balancing em máquinas EC2 da Amazon, o Befit assegura um desempenho eficiente e uma experiência contínua, mesmo durante períodos de alta demanda.
 
+# Figma
+https://www.figma.com/file/qD4ya5ZFeezl0emLJZa9wR/BeFit-Design-System?type=design&node-id=926-5719&t=EfZtgXaKG0Ob19ZA-0
+
 <h3 align="left"> Linguagens e ferramentas usadas:</h3>
 <p align="left"> <a href="https://azure.microsoft.com/en-in/" target="_blank" rel="noreferrer"> 
   <img src="https://www.vectorlogo.zone/logos/microsoft_azure/microsoft_azure-icon.svg" alt="azure" width="40" height="40"/> </a>
