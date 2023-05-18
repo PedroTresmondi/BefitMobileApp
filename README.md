@@ -43,4 +43,11 @@ Essa abordagem distribui a carga de trabalho de forma eficiente, garantindo uma 
 
 O Befit tem como objetivo proporcionar aos usuários uma solução completa, fácil de usar e eficaz para alcançar seus objetivos de condicionamento físico e estilo de vida saudável.
 
+# Autores 
+- [@PedroTresmondi](https://www.github.com/PedroTresmondi)
+- [@Wesleysou](https://www.github.com/Wesleysou)
+- [@Victor-Afonso](https://github.com/Victor-Afonso)
+- [@Gustavolpe](https://github.com/Gustavolpe)
+- [@MatheusCastro1](https://github.com/Matheuscastro01)
+- [@GustavoCosta](https://github.com/GustaCosta)
 
